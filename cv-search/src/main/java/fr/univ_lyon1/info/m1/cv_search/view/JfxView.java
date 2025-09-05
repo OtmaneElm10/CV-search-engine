@@ -10,6 +10,8 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -23,6 +25,7 @@ import javafx.stage.Stage;
 public class JfxView {
     private HBox searchSkillsBox;
     private VBox resultBox;
+    private ComboBox<ComboItem> comboBox; 
 
     /**
      * Create the main view of the application.
@@ -46,11 +49,47 @@ public class JfxView {
         Node resultBox = createResultsWidget();
         root.getChildren().add(resultBox);
 
+        Node strategywidget = StrategyChoiceStrategyWidget();
+        root.getChildren().add(strategywidget);
+
         // Everything's ready: add it to the scene and display it
         Scene scene = new Scene(root, width, height);
         stage.setScene(scene);
         stage.show();
     }
+
+    public enum StrategyType {
+        ALL, Average
+    }
+
+    public static class ComboItem {
+    private String text;
+    private int id;
+    private StrategyType type;
+
+    public ComboItem(String text, int id,StrategyType type) {
+        this.text = text;
+        this.id = id;
+        this.type = type;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public StrategyType getType() {
+        return type;
+    }
+
+    @Override
+    public String toString() {
+        return text; // Displayed in ComboBox
+    }
+}
 
 
     /**
@@ -102,33 +141,52 @@ public class JfxView {
      * Create the widget used to trigger the search.
      */
     private Node createSearchWidget() {
-        Button search = new Button("Search");
-        search.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(final ActionEvent event) {
-                // TODO: This code is unacceptably dirty!
-                // TODO: You MUST rewrite it for the final version.
-                ApplicantList listApplicants
-                    = new ApplicantListBuilder(new File(".")).build();
-                resultBox.getChildren().clear();
-                for (Applicant a : listApplicants) {
-                    boolean selected = true;
-                    // TODO: OMG, don't ever do that ...
-                    for (Node skill : searchSkillsBox.getChildren()) {
-                        String skillName = ((Button) skill).getText();
-                        if (a.getSkill(skillName) < 50) {
-                            selected = false;
-                            break;
-                        }
-                    }
-                    if (selected) {
-                        resultBox.getChildren().add(new Label(a.getName()));
-                    }
+    Button search = new Button("Search");
+    search.setOnAction(event -> {
+        ApplicantList listApplicants = new ApplicantListBuilder(new File(".")).build();
+        resultBox.getChildren().clear();
+
+        /*Need to verify this part ! */
+        ComboItem selectedItem = comboBox.getValue();
+        int threshold = selectedItem.getId();      
+        StrategyType type = selectedItem.getType();
+
+        for (Applicant a : listApplicants) {
+            double total = 0;
+            int count = 0;
+            boolean allAbove = true;
+
+            for (Node skill : searchSkillsBox.getChildren()) {
+                String skillName = ((Button) skill).getText();
+                int level = a.getSkill(skillName);
+
+                total += level;
+                count++;
+
+                if (level < threshold) {
+                    allAbove = false;
                 }
             }
-        });
-        return search;
-    }
+
+            
+            double average = (count > 0) ? total / count : 0;
+
+           
+            boolean selected = false;
+            if (type == StrategyType.ALL) {
+                selected = allAbove;
+            } else if (type == StrategyType.Average) {
+                selected = average >= threshold;
+            }
+
+            if (selected) {
+                resultBox.getChildren().add(new Label(a.getName()));
+            }
+        }
+    });
+    return search;
+}
+
 
     /**
      * Create the widget showing the list of skills currently searched
@@ -138,4 +196,41 @@ public class JfxView {
         searchSkillsBox = new HBox();
         return searchSkillsBox;
     }
+
+
+
+    /**
+     * Create the widget showing the strategy used by the user
+     * 
+     */
+
+     private Node StrategyChoiceStrategyWidget() {
+        Label strategyLabel = new Label("Strategy : ");
+        comboBox =  new ComboBox<>();
+        comboBox.getItems().addAll( 
+            new ComboItem("ALL >= 50", 50, StrategyType.ALL),
+            new ComboItem("ALL >= 60", 60,StrategyType.ALL),
+            new ComboItem("Average >= 50", 50, StrategyType.Average));
+
+            comboBox.setValue(comboBox.getItems().get(0)); /*Default value  */
+            
+            /*Listener */
+
+            comboBox.setOnAction(e -> {
+                ComboItem selectedItem = comboBox.getSelectionModel().getSelectedItem();
+                if (selectedItem != null) {
+                System.out.println("Selected ID: " + selectedItem.getId());
+
+            }
+        }); // Capture the ID based on selection
+
+        HBox box = new HBox(strategyLabel, comboBox);
+        box.setSpacing(10);
+
+        return box;
+
+     
+}
+
+
 }
