@@ -179,8 +179,10 @@ public class JfxView {
                 selected = average >= threshold;
             }
 
-            if (selected) {
-                resultBox.getChildren().add(new Label(a.getName()));
+            if (selected) { /*Used to show the name of appliant + average  */
+                String text = a.getName() + "-Moyenne : " + String.format("%.2f", average);
+                resultBox.getChildren().add(new Label(text));
+                
             }
         }
     });
