@@ -1,5 +1,4 @@
 package fr.univ_lyon1.info.m1.cv_search.model;
-import java.util.List;
 
 public class AverageAboveThresholdStrategy implements SelectionStrategy{
     private int threshold;
@@ -19,7 +18,7 @@ public class AverageAboveThresholdStrategy implements SelectionStrategy{
 
         for (String skill : requiredSkills) {
             total += applicant.getSkill(skill);
-            count++
+            count++;
         }
 
         if (count == 0) {

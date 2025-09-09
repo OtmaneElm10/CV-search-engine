@@ -146,7 +146,7 @@ public class JfxView {
         ApplicantList listApplicants = new ApplicantListBuilder(new File(".")).build();
         resultBox.getChildren().clear();
 
-        /*Need to verify this part ! */
+        /*Partie à changer! */
         ComboItem selectedItem = comboBox.getValue();
         int threshold = selectedItem.getId();      
         StrategyType type = selectedItem.getType();
