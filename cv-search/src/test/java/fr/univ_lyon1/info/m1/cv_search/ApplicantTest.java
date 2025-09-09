@@ -4,7 +4,6 @@ import java.io.File;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-
 import org.junit.jupiter.api.Test;
 
 import fr.univ_lyon1.info.m1.cv_search.model.Applicant;
@@ -31,7 +30,7 @@ public class ApplicantTest {
         assertThat("John Smith", is(a.getName()));
         // TODO: Obviously incorrect, hence should fail.
         // TODO: Make sure it does and remove this buggy assertion.
-        assertThat(2 + 2, is(5));
+        assertThat(2 + 2, is(4));
     }
 
     /** Check that the builder can read several files in the same directory. */
