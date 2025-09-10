@@ -4,16 +4,16 @@ import java.util.List;
 
 public interface SelectionStrategy {
     /**
-     * Vérifie si un candidat correspond aux compétences demandées.
-     *
-     * @param applicant le candidat
-     * @param skills la liste des compétences recherchées
-     * @return true si le candidat est sélectionné selon la stratégie
-     */
+ * Check if a candidate matches the required skills.
+ *
+ * @param applicant the candidate
+ * @param skills the list of required skills
+ * @return true if the candidate is selected according to the strategy
+ */
     boolean isSelected(Applicant applicant, List<String> skills);
 
     /**
-     * Représentation textuelle (affichée dans la ComboBox de la vue).
+     * textual rapresentation
      */
     @Override
     String toString();

@@ -1,10 +1,14 @@
 package fr.univ_lyon1.info.m1.cv_search.view;
 
 import java.io.File;
+import java.util.List;
 
+import fr.univ_lyon1.info.m1.cv_search.model.AllAboveThresholdStrategy;
 import fr.univ_lyon1.info.m1.cv_search.model.Applicant;
 import fr.univ_lyon1.info.m1.cv_search.model.ApplicantList;
 import fr.univ_lyon1.info.m1.cv_search.model.ApplicantListBuilder;
+import fr.univ_lyon1.info.m1.cv_search.model.AverageAboveThresholdStrategy;
+import fr.univ_lyon1.info.m1.cv_search.model.SelectionStrategy;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -64,32 +68,23 @@ public class JfxView {
 
     public static class ComboItem {
     private String text;
-    private int id;
-    private StrategyType type;
+    private SelectionStrategy strategy;
 
-    public ComboItem(String text, int id,StrategyType type) {
+    public ComboItem(String text, SelectionStrategy strategy) {
         this.text = text;
-        this.id = id;
-        this.type = type;
+        this.strategy = strategy;
     }
 
-    public String getText() {
-        return text;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public StrategyType getType() {
-        return type;
+    public SelectionStrategy getStrategy() {
+        return strategy;
     }
 
     @Override
     public String toString() {
-        return text; // Displayed in ComboBox
+        return text; 
     }
 }
+
 
 
     /**
@@ -140,54 +135,32 @@ public class JfxView {
     /**
      * Create the widget used to trigger the search.
      */
-    private Node createSearchWidget() {
+   private Node createSearchWidget() {
     Button search = new Button("Search");
     search.setOnAction(event -> {
         ApplicantList listApplicants = new ApplicantListBuilder(new File(".")).build();
         resultBox.getChildren().clear();
 
-        /*Partie à changer! */
-        ComboItem selectedItem = comboBox.getValue();
-        int threshold = selectedItem.getId();      
-        StrategyType type = selectedItem.getType();
+        // get the strategy of comboBox
+        SelectionStrategy strategy = comboBox.getValue().getStrategy();
 
+        
+        List<String> requiredSkills = searchSkillsBox.getChildren().stream()
+                .map(node -> ((Button) node).getText())
+                .toList();
+
+        // apply strategy for every person
         for (Applicant a : listApplicants) {
-            double total = 0;
-            int count = 0;
-            boolean allAbove = true;
-
-            for (Node skill : searchSkillsBox.getChildren()) {
-                String skillName = ((Button) skill).getText();
-                int level = a.getSkill(skillName);
-
-                total += level;
-                count++;
-
-                if (level < threshold) {
-                    allAbove = false;
-                }
-            }
-
-            
-            double average = (count > 0) ? total / count : 0;
-
-           
-            boolean selected = false;
-            if (type == StrategyType.ALL) {
-                selected = allAbove;
-            } else if (type == StrategyType.Average) {
-                selected = average >= threshold;
-            }
-
-            if (selected) { /*Used to show the name of appliant + average  */
-                String text = a.getName() + "-Moyenne : " + String.format("%.2f", average);
+            if (strategy.isSelected(a, requiredSkills)) {
+                String text = a.getName() + " - Moyenne : " + 
+                              String.format("%.2f", a.getAverage(requiredSkills));
                 resultBox.getChildren().add(new Label(text));
-                
             }
         }
     });
     return search;
 }
+
 
 
     /**
@@ -206,33 +179,23 @@ public class JfxView {
      * 
      */
 
-     private Node StrategyChoiceStrategyWidget() {
-        Label strategyLabel = new Label("Strategy : ");
-        comboBox =  new ComboBox<>();
-        comboBox.getItems().addAll( 
-            new ComboItem("ALL >= 50", 50, StrategyType.ALL),
-            new ComboItem("ALL >= 60", 60,StrategyType.ALL),
-            new ComboItem("Average >= 50", 50, StrategyType.Average));
+    private Node StrategyChoiceStrategyWidget() {
+    Label strategyLabel = new Label("Strategy : ");
+    comboBox = new ComboBox<>();
+    comboBox.getItems().addAll( 
+        new ComboItem("ALL >= 50", new AllAboveThresholdStrategy(50)),
+        new ComboItem("ALL >= 60", new AllAboveThresholdStrategy(60)),
+        new ComboItem("Average >= 50", new AverageAboveThresholdStrategy(50))
+    );
 
-            comboBox.setValue(comboBox.getItems().get(0)); /*Default value  */
-            
-            /*Listener */
+    comboBox.setValue(comboBox.getItems().get(0)); 
 
-            comboBox.setOnAction(e -> {
-                ComboItem selectedItem = comboBox.getSelectionModel().getSelectedItem();
-                if (selectedItem != null) {
-                System.out.println("Selected ID: " + selectedItem.getId());
+    HBox box = new HBox(strategyLabel, comboBox);
+    box.setSpacing(10);
 
-            }
-        }); // Capture the ID based on selection
-
-        HBox box = new HBox(strategyLabel, comboBox);
-        box.setSpacing(10);
-
-        return box;
-
-     
+    return box;
 }
+
 
 
 }

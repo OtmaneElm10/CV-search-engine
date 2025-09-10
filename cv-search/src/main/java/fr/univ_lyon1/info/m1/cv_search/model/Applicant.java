@@ -1,6 +1,7 @@
 package fr.univ_lyon1.info.m1.cv_search.model;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,4 +32,22 @@ public class Applicant {
     public void setName(final String name) {
         this.name = name;
     }
+
+   
+    public double getAverage(List<String> skills) {
+    if (skills == null || skills.isEmpty()) {
+        return 0.0;
+    }
+
+    double total = 0;
+    int count = 0;
+
+    for (String skill : skills) {
+        total += getSkill(skill); // tu dois déjà avoir getSkill(String)
+        count++;
+    }
+
+    return (count > 0) ? total / count : 0.0;
+}
+
 }
