@@ -19,35 +19,49 @@ public class Applicant {
     }
 
     /**
-     * Assign score {@param value} to skill {@param skillName} for the current applicant.
+     * Assign score.
+     * @param skillName the name of the skill 
+     * @param value the score to assign.
      */
     public void setSkill(final String skillName, final int value) {
         skills.put(skillName, value);
     }
 
+
+    /**
+     * Get the name of applicant.
+     */
     public String getName() {
         return name;
     }
 
+
+    /**
+     *  Set the name of applicant.
+     */
     public void setName(final String name) {
         this.name = name;
     }
 
-   
-    public double getAverage(List<String> skills) {
-    if (skills == null || skills.isEmpty()) {
-        return 0.0;
+    /**
+    *Get the average from list of skills.
+    * @param skills list of skills
+    * @return   the avarage score 
+    */
+    public double getAverage(final List<String> skills) {
+        if (skills == null || skills.isEmpty()) {
+            return 0.0;
+        }
+
+        double total = 0;
+        int count = 0;
+
+        for (String skill : skills) {
+            total += getSkill(skill); 
+            count++;
+        }
+
+        return (count > 0) ? total / count : 0.0;
     }
-
-    double total = 0;
-    int count = 0;
-
-    for (String skill : skills) {
-        total += getSkill(skill); // tu dois déjà avoir getSkill(String)
-        count++;
-    }
-
-    return (count > 0) ? total / count : 0.0;
-}
 
 }

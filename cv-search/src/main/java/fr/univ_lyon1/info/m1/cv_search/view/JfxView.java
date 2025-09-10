@@ -14,7 +14,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -22,20 +21,22 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-
 /**
  * Main view of the application, implemented using JavaFX.
  */
 public class JfxView {
     private HBox searchSkillsBox;
     private VBox resultBox;
-    private ComboBox<ComboItem> comboBox; 
+    private ComboBox<ComboItem> comboBox;
 
     /**
      * Create the main view of the application.
+     *
+     * @param stage  the application stage
+     * @param width  the window width
+     * @param height the window height
      */
     public JfxView(final Stage stage, final int width, final int height) {
-        // Name of window
         stage.setTitle("Search for CV");
 
         VBox root = new VBox();
@@ -46,49 +47,69 @@ public class JfxView {
         Node searchSkillsBox = createCurrentSearchSkillsWidget();
         root.getChildren().add(searchSkillsBox);
 
-
         Node search = createSearchWidget();
         root.getChildren().add(search);
 
         Node resultBox = createResultsWidget();
         root.getChildren().add(resultBox);
 
-        Node strategywidget = StrategyChoiceStrategyWidget();
-        root.getChildren().add(strategywidget);
+        Node strategyWidget = strategyChoiceStrategyWidget();
+        root.getChildren().add(strategyWidget);
 
-        // Everything's ready: add it to the scene and display it
         Scene scene = new Scene(root, width, height);
         stage.setScene(scene);
         stage.show();
     }
 
+    /**
+     * Type of strategy.
+     */
     public enum StrategyType {
-        ALL, Average
+        ALL, AVERAGE
     }
 
+    /**
+     * Item for ComboBox, holding a label and a strategy.
+     */
     public static class ComboItem {
-    private String text;
-    private SelectionStrategy strategy;
+        private String text;
+        private SelectionStrategy strategy;
 
-    public ComboItem(String text, SelectionStrategy strategy) {
-        this.text = text;
-        this.strategy = strategy;
+        /**
+         * Constructor.
+         *
+         * @param text     text shown in the ComboBox
+         * @param strategy the strategy represented
+         */
+        public ComboItem(final String text, final SelectionStrategy strategy) {
+            this.text = text;
+            this.strategy = strategy;
+        }
+
+        /**
+         * Get the strategy associated with this item.
+         *
+         * @return the selection strategy
+         */
+        public SelectionStrategy getStrategy() {
+            return strategy;
+        }
+
+        /**
+         * Display text in the ComboBox.
+         *
+         * @return the text
+         */
+        @Override
+        public String toString() {
+            return text;
+        }
     }
-
-    public SelectionStrategy getStrategy() {
-        return strategy;
-    }
-
-    @Override
-    public String toString() {
-        return text; 
-    }
-}
-
-
 
     /**
      * Create the text field to enter a new skill.
+     *
+     * @return the widget node
      */
     private Node createNewSkillWidget() {
         HBox newSkillBox = new HBox();
@@ -103,7 +124,7 @@ public class JfxView {
             public void handle(final ActionEvent event) {
                 String text = textField.getText().strip();
                 if (text.equals("")) {
-                    return; // Do nothing
+                    return;
                 }
 
                 Button skillBtn = new Button(text);
@@ -119,6 +140,7 @@ public class JfxView {
                 textField.requestFocus();
             }
         };
+
         submitButton.setOnAction(skillHandler);
         textField.setOnAction(skillHandler);
         return newSkillBox;
@@ -126,6 +148,8 @@ public class JfxView {
 
     /**
      * Create the widget showing the list of applicants.
+     *
+     * @return the widget node
      */
     private Node createResultsWidget() {
         resultBox = new VBox();
@@ -133,69 +157,63 @@ public class JfxView {
     }
 
     /**
-     * Create the widget used to trigger the search.
+     * Create the search button and define its behavior.
+     *
+     * @return the search button
      */
-   private Node createSearchWidget() {
-    Button search = new Button("Search");
-    search.setOnAction(event -> {
-        ApplicantList listApplicants = new ApplicantListBuilder(new File(".")).build();
-        resultBox.getChildren().clear();
+    private Node createSearchWidget() {
+        Button search = new Button("Search");
+        search.setOnAction(event -> {
+            ApplicantList listApplicants = new ApplicantListBuilder(new File(".")).build();
+            resultBox.getChildren().clear();
 
-        // get the strategy of comboBox
-        SelectionStrategy strategy = comboBox.getValue().getStrategy();
+            SelectionStrategy strategy = comboBox.getValue().getStrategy();
 
-        
-        List<String> requiredSkills = searchSkillsBox.getChildren().stream()
-                .map(node -> ((Button) node).getText())
-                .toList();
+            List<String> requiredSkills = searchSkillsBox.getChildren().stream()
+                    .map(node -> ((Button) node).getText())
+                    .toList();
 
-        // apply strategy for every person
-        for (Applicant a : listApplicants) {
-            if (strategy.isSelected(a, requiredSkills)) {
-                String text = a.getName() + " - Moyenne : " + 
-                              String.format("%.2f", a.getAverage(requiredSkills));
-                resultBox.getChildren().add(new Label(text));
+            for (Applicant a : listApplicants) {
+                if (strategy.isSelected(a, requiredSkills)) {
+                    String text = a.getName()
+                            + " - Moyenne : "
+                            + String.format("%.2f", a.getAverage(requiredSkills));
+                    resultBox.getChildren().add(new Label(text));
+                }
             }
-        }
-    });
-    return search;
-}
-
-
+        });
+        return search;
+    }
 
     /**
-     * Create the widget showing the list of skills currently searched
-     * for.
+     * Create the widget showing the list of skills currently searched for.
+     *
+     * @return the widget node
      */
     private Node createCurrentSearchSkillsWidget() {
         searchSkillsBox = new HBox();
         return searchSkillsBox;
     }
 
-
-
     /**
-     * Create the widget showing the strategy used by the user
-     * 
+     * Create the widget showing the strategy choice for the user.
+     *
+     * @return the widget node
      */
+    private Node strategyChoiceStrategyWidget() {
+        Label strategyLabel = new Label("Strategy : ");
+        comboBox = new ComboBox<>();
+        comboBox.getItems().addAll(
+                new ComboItem("ALL >= 50", new AllAboveThresholdStrategy(50)),
+                new ComboItem("ALL >= 60", new AllAboveThresholdStrategy(60)),
+                new ComboItem("Average >= 50", new AverageAboveThresholdStrategy(50))
+        );
 
-    private Node StrategyChoiceStrategyWidget() {
-    Label strategyLabel = new Label("Strategy : ");
-    comboBox = new ComboBox<>();
-    comboBox.getItems().addAll( 
-        new ComboItem("ALL >= 50", new AllAboveThresholdStrategy(50)),
-        new ComboItem("ALL >= 60", new AllAboveThresholdStrategy(60)),
-        new ComboItem("Average >= 50", new AverageAboveThresholdStrategy(50))
-    );
+        comboBox.setValue(comboBox.getItems().get(0));
 
-    comboBox.setValue(comboBox.getItems().get(0)); 
+        HBox box = new HBox(strategyLabel, comboBox);
+        box.setSpacing(10);
 
-    HBox box = new HBox(strategyLabel, comboBox);
-    box.setSpacing(10);
-
-    return box;
-}
-
-
-
+        return box;
+    }
 }

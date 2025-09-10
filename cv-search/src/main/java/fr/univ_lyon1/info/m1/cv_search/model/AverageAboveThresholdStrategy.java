@@ -1,18 +1,33 @@
 package fr.univ_lyon1.info.m1.cv_search.model;
+import java.util.List;
 
-public class AverageAboveThresholdStrategy implements SelectionStrategy{
+
+
+/**
+ * Strategy used to know the avarage.
+ */
+
+public class AverageAboveThresholdStrategy implements SelectionStrategy {
     private int threshold;
 
-
-    public AverageAboveThresholdStrategy (int threshold) {
+    /**
+     * Average >= threshold.
+     * @param threshold limit
+     */
+    public AverageAboveThresholdStrategy(final int threshold) {
         this.threshold = threshold;
     }
     
 
-
+    /**
+     * Check if the applicant is selected according to the average strategy.
+     *
+    * @param applicant the candidate being evaluated
+     * @param requiredSkills the list of required skills
+     * @return true if the average skill level is greater than or equal to the threshold
+    */
     @Override
-
-    public boolean isSelected (Applicant applicant, java.util.List<String> requiredSkills) {
+    public boolean isSelected(final Applicant applicant, final List<String> requiredSkills) {
         int total = 0;
         int count = 0;
 
@@ -22,10 +37,10 @@ public class AverageAboveThresholdStrategy implements SelectionStrategy{
         }
 
         if (count == 0) {
-            return false ;
+            return false;
         }
 
-        double average = (double)total /count ;
+        double average = (double) total / count;
         return average >= threshold;
     }
 }
