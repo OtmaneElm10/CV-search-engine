@@ -7,9 +7,7 @@ import java.util.List;
 /**
  * Wrapper around {@link List<Applicant>} implementing the observer pattern.
  */
-public class ApplicantList implements Iterable<Applicant>
-//TODO: checkstyle will (rightfully) complain about this brace. Make sure it does, and then fix it.
-{
+public class ApplicantList implements Iterable<Applicant> {
     private List<Applicant> list = new ArrayList<Applicant>();
 
     void add(final Applicant a) {
@@ -22,7 +20,12 @@ public class ApplicantList implements Iterable<Applicant>
     public int size() {
         return list.size();
     }
-
+   
+    /**
+    * Returns an iterator over the applicants in the list.
+     *
+     * @return an iterator for the applicant list
+    */
     @Override
     public Iterator<Applicant> iterator() {
         return list.iterator();
@@ -33,7 +36,10 @@ public class ApplicantList implements Iterable<Applicant>
         list.clear();
     }
 
-    /** Sets the content of the applicant list. */
+    /** 
+     * Sets the content of the applicant list. 
+     * @param list list of applicant 
+    */
     public void setList(final ApplicantList list) {
         this.list = list.list;
     }
