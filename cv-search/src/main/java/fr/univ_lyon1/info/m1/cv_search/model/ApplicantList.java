@@ -73,4 +73,29 @@ public class ApplicantList implements Iterable<Applicant>, Observable {
     public void setList(final ApplicantList list) {
         this.list = list.list;
     }
+
+
+    /**
+     * Method used to know if a applicant is selected or not.
+     * @param strategy type of strategy
+     * @param requiredskills skills entered by the user 
+     * @return list of selected applicants
+     */
+    public List<Applicant> getSelectedapplicants(final SelectionStrategy strategy, 
+        final List<String> requiredskills) {
+
+        List<Applicant> selected = new ArrayList<>();
+
+        if (strategy == null) {
+            return selected;
+        }
+        System.out.println("Nb candidats dans ApplicantList = " + this.size()); 
+        for (Applicant a: this) {
+            if (strategy.isSelected(a, requiredskills)) {
+                selected.add(a);
+            }
+        }
+
+        return selected;
+    }
 }
