@@ -91,8 +91,17 @@ email, ce fichier en contient une copie.
     - Nautibus TP105, Nautibus TP107, Nautibus TP108                 : Ryan Horache
     - Nautibus TP109, Nautibus TD116, Nautibus TD124, Nautibus TD126 : Lionel Medini
 
+## TP 3 (mardi 9/9/2025, 15h45) : Outillage (suite)
 
-## CM 3 (mardi 9/9/2025, 14h00, par Lionel Medini) : Coding style, Design patterns (début)
+* Énoncé : continuer [TP2-outils/README.md](TP2-outils/README.md)
+
+* Salles :
+    - Matthieu Moy circule entre les salles
+    - Nautibus TP105, Nautibus TP107, Nautibus TP108 : Abdelhakim Boudraa
+    - Nautibus TP109, Nautibus TP110                 : Ryan Horache
+    - Nautibus TD116, Nautibus TD124, Nautibus TD126 : Lionel Medini
+
+## CM 3 (mardi 9/9/2025, 17h30, par Lionel Medini) : Coding style, Design patterns (début)
 
 ### Coding style
 
@@ -109,49 +118,26 @@ email, ce fichier en contient une copie.
 
 * Vidéo du mercredi 9/9/2020 sur Youtube : [https://youtu.be/9oV0xDSrXes](https://youtu.be/9oV0xDSrXes)
 
-## TP 3 (mardi 9/9/2025, 15h45) : Outillage (suite)
-
-* Énoncé : continuer [TP2-outils/README.md](TP2-outils/README.md)
-
-* Salles :
-    - Nautibus TD001
-    - Nautibus TD005
-    - Nautibus TP105
-    - Nautibus TP107
-    - Nautibus TP108
-    - Nautibus TP109
-    - Nautibus TP110
-    - Nautibus TD116
-    - Nautibus TD124
-    - Nautibus TD126
-
-## CM 4 (mercredi 10/9/2025, 14h, par Lionel Medini) : Design patterns (suite)
+## CM 4 (vendredi 12/9/2025, 11h30, par Lionel Medini) : Design patterns (suite)
 
 ## TD 1 (mardi 16/9/2025, 14h) : Design patterns
 
 * [TD1-design-patterns](https://matthieu-moy.fr/cours/mif01/TD1-patterns/TD-design-patterns.html)
 
-<!-- * Salles : cf. TOMUSS et mail envoyé pour les étudiants.
-  - Nautibus TD 2 : Matthieu Moy
-  - Nautibus TD 3 : Joel Felderhoff
-  - Nautibus TD12 : Lionel Medini
-  - Nautibus TD13 : Mathieu Hilaire
-  -->
+* Salles :
+  - Groupe A, Nautibus TD126 : Matthieu Moy
+  - Groupe B, Nautibus TD005 : Abdelhakim Boudraa
+  - Groupe C, Nautibus TD124 : Ryan Horache
+  - Groupe D, Nautibus TD116 : Lionel Medini
+
 ## TP 4 (mardi 16/9/2025, 15h45) : Design patterns & refactoring
 
 * [TP3-patterns/README.md](TP3-patterns/README.md) et de l'aide avec [MVC](TP3-patterns/mvc.md)
 
 * Salles :
-    - Nautibus TD001
-    - Nautibus TD005
-    - Nautibus TP103
-    - Nautibus TP105
-    - Nautibus TP107
-    - Nautibus TP108
-    - Nautibus TP109
-    - Nautibus TD116
-    - Nautibus TD124
-    - Nautibus TD126
+    - Nautibus TP103, Nautibus TP105, Nautibus TP107 : Abdelhakim Boudraa
+    - Nautibus TP108, Nautibus TP109 : Ryan Horache
+    - Nautibus TD116, Nautibus TD124, Nautibus TD126 : Lionel Medini
 
 ## CM 5 (vendredi 19/9/2025, 9h45) : Métaprogrammation, spécifications et cas d'utilisation
 
@@ -174,8 +160,6 @@ email, ce fichier en contient une copie.
 * Continuer avec : [TP3-patterns/README.md](TP3-patterns/README.md) et de l'aide avec [MVC](TP3-patterns/mvc.md)
 
 * Salles :
-    - Nautibus TD001
-    - Nautibus TD005
     - Nautibus TP103
     - Nautibus TP105
     - Nautibus TP107
@@ -194,8 +178,6 @@ email, ce fichier en contient une copie.
 * Énoncé : [TP4-tests/README.md](TP4-tests/README.md)
 
 * Salles :
-    - Nautibus TD001
-    - Nautibus TD005
     - Nautibus TP103
     - Nautibus TP105
     - Nautibus TP107
@@ -246,8 +228,6 @@ email, ce fichier en contient une copie.
 * Sujet : continuer avec [TP4-tests/README.md](TP4-tests/README.md)
 
 * Salles :
-    - Nautibus TD001
-    - Nautibus TD005
     - Nautibus TP103
     - Nautibus TP105
     - Nautibus TP107
@@ -271,8 +251,6 @@ email, ce fichier en contient une copie.
 Cette dernière séance devrait vous permettre de boucler votre projet, qui est à rendre quelques jours plus tard.
 
 * Salles :
-    - Nautibus TD001
-    - Nautibus TD005
     - Nautibus TP103
     - Nautibus TP105
     - Nautibus TP107
