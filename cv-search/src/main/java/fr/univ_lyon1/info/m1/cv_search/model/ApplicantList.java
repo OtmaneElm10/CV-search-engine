@@ -7,8 +7,38 @@ import java.util.List;
 /**
  * Wrapper around {@link List<Applicant>} implementing the observer pattern.
  */
-public class ApplicantList implements Iterable<Applicant> {
+public class ApplicantList implements Iterable<Applicant>, Observable {
+
+
     private List<Applicant> list = new ArrayList<Applicant>();
+    private List<Observer> observers = new ArrayList<Observer>();
+
+    /**
+     * Add new observer to the list of observers.
+     */
+    @Override
+    public void addObserver(final Observer o) {
+        observers.add(o);
+    }
+
+    /**
+     * delete observer from the list of observers.
+     */
+    @Override
+    public void deleteObserver(final Observer o) {
+        observers.remove(o);
+    }
+
+    /**
+     * Notify all observers when there is a new change.
+     */
+    @Override
+    public void notifyObservers() {
+        for (Observer o:observers) {
+            o.update();
+        }
+    }
+
 
     void add(final Applicant a) {
         list.add(a);
