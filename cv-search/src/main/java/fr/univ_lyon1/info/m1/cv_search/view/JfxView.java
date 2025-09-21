@@ -1,14 +1,12 @@
 package fr.univ_lyon1.info.m1.cv_search.view;
 
-import java.io.File;
-import java.util.List;
 
-import fr.univ_lyon1.info.m1.cv_search.model.AllAboveThresholdStrategy;
+
 import fr.univ_lyon1.info.m1.cv_search.model.Applicant;
 import fr.univ_lyon1.info.m1.cv_search.model.ApplicantList;
-import fr.univ_lyon1.info.m1.cv_search.model.ApplicantListBuilder;
-import fr.univ_lyon1.info.m1.cv_search.model.AverageAboveThresholdStrategy;
 import fr.univ_lyon1.info.m1.cv_search.model.SelectionStrategy;
+import fr.univ_lyon1.info.m1.cv_search.model.Observer;
+import fr.univ_lyon1.info.m1.cv_search.controller.Controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -24,10 +22,13 @@ import javafx.stage.Stage;
 /**
  * Main view of the application, implemented using JavaFX.
  */
-public class JfxView {
+public class JfxView implements Observer {
     private HBox searchSkillsBox;
     private VBox resultBox;
-    private ComboBox<ComboItem> comboBox;
+    private ComboBox<String> comboBox;
+    private ApplicantList applicantList;
+    private Controller controller;
+
 
     /**
      * Create the main view of the application.
@@ -35,8 +36,16 @@ public class JfxView {
      * @param stage  the application stage
      * @param width  the window width
      * @param height the window height
+     * @param model link to the model
+     * @param controller link to the controller
      */
-    public JfxView(final Stage stage, final int width, final int height) {
+    public JfxView(final Stage stage, final int width, final int height,
+        final ApplicantList model, final Controller controller) {
+        this.applicantList = model;
+        this.controller = controller;
+        applicantList.addObserver(this);
+
+
         stage.setTitle("Search for CV");
 
         VBox root = new VBox();
@@ -59,6 +68,16 @@ public class JfxView {
         Scene scene = new Scene(root, width, height);
         stage.setScene(scene);
         stage.show();
+    }
+
+    
+    /**
+     * Update results.
+     */
+    public void update() {
+        System.out.println("Vue notifiée, rafraîchissement !");
+
+        refreshResults();
     }
 
     /**
@@ -91,7 +110,7 @@ public class JfxView {
          *
          * @return the selection strategy
          */
-        public SelectionStrategy getStrategy() {
+        public SelectionStrategy getStrategy() { //elle va sauter de la vue
             return strategy;
         }
 
@@ -127,12 +146,15 @@ public class JfxView {
                     return;
                 }
 
+                controller.addSkill(text); //inform the controller
+
                 Button skillBtn = new Button(text);
                 searchSkillsBox.getChildren().add(skillBtn);
                 skillBtn.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(final ActionEvent event) {
                         searchSkillsBox.getChildren().remove(skillBtn);
+                        controller.removeSkill(text); //inform the controller of suppression
                     }
                 });
 
@@ -163,25 +185,7 @@ public class JfxView {
      */
     private Node createSearchWidget() {
         Button search = new Button("Search");
-        search.setOnAction(event -> {
-            ApplicantList listApplicants = new ApplicantListBuilder(new File(".")).build();
-            resultBox.getChildren().clear();
-
-            SelectionStrategy strategy = comboBox.getValue().getStrategy();
-
-            List<String> requiredSkills = searchSkillsBox.getChildren().stream()
-                    .map(node -> ((Button) node).getText())
-                    .toList();
-
-            for (Applicant a : listApplicants) {
-                if (strategy.isSelected(a, requiredSkills)) {
-                    String text = a.getName()
-                            + " - Moyenne : "
-                            + String.format("%.2f", a.getAverage(requiredSkills));
-                    resultBox.getChildren().add(new Label(text));
-                }
-            }
-        });
+        search.setOnAction(event -> controller.search());
         return search;
     }
 
@@ -204,16 +208,35 @@ public class JfxView {
         Label strategyLabel = new Label("Strategy : ");
         comboBox = new ComboBox<>();
         comboBox.getItems().addAll(
-                new ComboItem("ALL >= 50", new AllAboveThresholdStrategy(50)),
-                new ComboItem("ALL >= 60", new AllAboveThresholdStrategy(60)),
-                new ComboItem("Average >= 50", new AverageAboveThresholdStrategy(50))
+            "ALL >= 50",
+            "ALL >= 60",
+            "Average >= 50"
         );
+        
+        comboBox.setValue("ALL >= 50");
 
-        comboBox.setValue(comboBox.getItems().get(0));
+        comboBox.setOnAction(event -> {
+            String choice = comboBox.getValue();
+            controller.setStrategyFromLabel(choice);
+
+        });
 
         HBox box = new HBox(strategyLabel, comboBox);
         box.setSpacing(10);
 
+
         return box;
+    }
+
+    private void refreshResults() {
+        resultBox.getChildren().clear();
+        for (Applicant a : controller.getSelectedApplicants()) {
+            String text = a.getName()
+                + " - Moyenne : "
+                + String.format("%.2f", a.getAverage(controller.getRequiredSkills()));
+            resultBox.getChildren().add(new Label(text));
+        }
+
+
     }
 }
