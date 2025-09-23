@@ -28,6 +28,8 @@ public class JfxView implements Observer {
     private ComboBox<String> comboBox;
     private ApplicantList applicantList;
     private Controller controller;
+    private Label strategyLabel;
+
 
 
     /**
@@ -76,8 +78,9 @@ public class JfxView implements Observer {
      */
     public void update() {
         System.out.println("Vue notifiée, rafraîchissement !");
-
+        refreshSkills();
         refreshResults();
+        refreshStrategy();
     }
 
     /**
@@ -147,19 +150,9 @@ public class JfxView implements Observer {
                 }
 
                 controller.addSkill(text); //inform the controller
-
-                Button skillBtn = new Button(text);
-                searchSkillsBox.getChildren().add(skillBtn);
-                skillBtn.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(final ActionEvent event) {
-                        searchSkillsBox.getChildren().remove(skillBtn);
-                        controller.removeSkill(text); //inform the controller of suppression
-                    }
-                });
-
                 textField.setText("");
                 textField.requestFocus();
+                //Suppression in update() 
             }
         };
 
@@ -205,19 +198,21 @@ public class JfxView implements Observer {
      * @return the widget node
      */
     private Node strategyChoiceStrategyWidget() {
-        Label strategyLabel = new Label("Strategy : ");
+        Label label = new Label("Strategy : ");
+        strategyLabel = new Label();
+
         comboBox = new ComboBox<>();
         comboBox.getItems().addAll(
             "ALL >= 50",
             "ALL >= 60",
-            "Average >= 50"
+            "AVERAGE >= 50"
         );
         
         comboBox.setValue("ALL >= 50");
 
         comboBox.setOnAction(event -> {
             String choice = comboBox.getValue();
-            controller.setStrategyFromLabel(choice);
+            controller.setStrategyFromLabel(choice); 
 
         });
 
@@ -228,6 +223,12 @@ public class JfxView implements Observer {
         return box;
     }
 
+    
+    //  ----Refresh functions, every function -> 1 responsability ----
+    
+    /**
+     * Refresh the results with candidates who satisfy the requirements.
+     */
     private void refreshResults() {
         resultBox.getChildren().clear();
         for (Applicant a : controller.getSelectedApplicants()) {
@@ -236,7 +237,30 @@ public class JfxView implements Observer {
                 + String.format("%.2f", a.getAverage(controller.getRequiredSkills()));
             resultBox.getChildren().add(new Label(text));
         }
-
-
     }
+
+    /**
+     * Refresh strategy in the model.
+     */
+    private void refreshStrategy() {
+
+        //update comboBox status
+        comboBox.getSelectionModel().select(controller.getStrategyLabel());
+
+        //selected strategy
+        strategyLabel.setText("Stratégie : " + controller.getStrategyLabel());
+    }
+
+    /**
+     * Refresh skills by passing in the model.
+     */
+    private void refreshSkills() {
+        searchSkillsBox.getChildren().clear();
+        for (String skill : controller.getRequiredSkills()) {
+            Button skillBtn = new Button(skill);
+            searchSkillsBox.getChildren().add(skillBtn);
+            skillBtn.setOnAction(e -> controller.removeSkill(skill));
+        }
+    }
+   
 }

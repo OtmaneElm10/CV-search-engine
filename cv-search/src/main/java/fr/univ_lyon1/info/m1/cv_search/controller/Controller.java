@@ -38,7 +38,7 @@ public class Controller {
     */
     public void addSkill(final String skill) {
         requiredskills.add(skill);
-        applicantList.notifyObservers();
+        applicantList.notifyObservers();   
     }
 
 
@@ -75,7 +75,7 @@ public class Controller {
         switch (label) {
             case "ALL >= 50" -> setStrategy(new AllAboveThresholdStrategy(50));
             case "ALL >= 60" -> setStrategy(new AllAboveThresholdStrategy(60));
-            case "Average >= 50" -> setStrategy(new AverageAboveThresholdStrategy(50));
+            case "AVERAGE >= 50" -> setStrategy(new AverageAboveThresholdStrategy(50));
             default -> setStrategy(null);
         }
     }
@@ -97,6 +97,11 @@ public class Controller {
 
     public SelectionStrategy getStrategy() {
         return strategy;
+    }
+
+    public String getStrategyLabel() {
+        return strategy != null ? strategy.getLabel() : "Aucune stratégie";
+
     }
 
 

@@ -36,7 +36,9 @@ public class AllAboveThresholdStrategy implements SelectionStrategy {
      * return string for comboBox.
      */
     @Override
-    public String toString() {
+    public String getLabel() {
         return "ALL >= " + threshold;
     }
+
+ 
 }
