@@ -1,5 +1,7 @@
 package fr.univ_lyon1.info.m1.cv_search.model;
 
+import fr.univ_lyon1.info.m1.cv_search.Dao.ApplicantDao;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -10,9 +12,21 @@ import java.util.List;
 public class ApplicantList implements Iterable<Applicant>, Observable {
 
 
-    private List<Applicant> list = new ArrayList<Applicant>();
+    private final ApplicantDao applicantDao;
+                                                       
     private List<Observer> observers = new ArrayList<Observer>();
 
+    
+    /**
+     * Constructor.
+     * @param applicantDao the dao to use to get the list of applicants
+     */
+    public ApplicantList(final ApplicantDao applicantDao) {
+        this.applicantDao = applicantDao;
+    }
+    
+    
+    
     /**
      * Add new observer to the list of observers.
      */
@@ -41,29 +55,26 @@ public class ApplicantList implements Iterable<Applicant>, Observable {
 
 
     void add(final Applicant a) {
-        list.add(a);
+        applicantDao.add(a);
     }
 
     /**
      * Get the number of applicants in the list.
      */
     public int size() {
-        return list.size();
+        return applicantDao.size();
     }
    
     /**
-    * Returns an iterator over the applicants in the list.
-     *
-     * @return an iterator for the applicant list
-    */
-    @Override
+     * Get an iterator over the list of applicants.
+     */
     public Iterator<Applicant> iterator() {
-        return list.iterator();
+        return applicantDao.findAll().iterator();
     }
 
     /** Clear the list of applicants. */
     public void clear() {
-        list.clear();
+        applicantDao.deleteAll();
     }
 
     /** 
@@ -71,7 +82,10 @@ public class ApplicantList implements Iterable<Applicant>, Observable {
      * @param list list of applicant 
     */
     public void setList(final ApplicantList list) {
-        this.list = list.list;
+        applicantDao.deleteAll();
+        for (Applicant a: list) {
+            add(a);
+        }
     }
 
 

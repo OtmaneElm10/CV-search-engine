@@ -2,6 +2,8 @@ package fr.univ_lyon1.info.m1.cv_search.model;
 
 import java.io.File;
 
+import fr.univ_lyon1.info.m1.cv_search.Dao.ApplicantDao;
+
 /**
  * Builder reading Yaml files in a directory to build Applicants.
  */
@@ -20,7 +22,8 @@ public class ApplicantListBuilder {
      * Build the list of applicants.
      */
     public ApplicantList build() {
-        ApplicantList applicants = new ApplicantList();
+        ApplicantDao dao = new ApplicantDao();
+        ApplicantList applicants = new ApplicantList(dao);
         for (File f : directory.listFiles()) {
             if (f.isFile() && f.getName().endsWith(".yaml")) {
                 Applicant a = new ApplicantBuilder(f).build();

@@ -23,6 +23,13 @@ public class ApplicantDao implements Dao<Applicant, String> {
     }
 
     /**
+     * Delete all elements from the list.
+     */
+    public void deleteAll() {
+        applicants.clear();
+    }
+
+    /**
      * Delete an element by id.
      * @param id the id of the element to delete from the list
      */
@@ -83,6 +90,15 @@ public class ApplicantDao implements Dao<Applicant, String> {
 
         }
         return false;
+    }
+
+
+    /**
+     * Return the size of the list of applicants.
+     * @return
+     */
+    public int size() {
+        return applicants.size();
     }
 } 
 
