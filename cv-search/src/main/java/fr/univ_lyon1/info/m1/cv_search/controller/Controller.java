@@ -1,9 +1,8 @@
 package fr.univ_lyon1.info.m1.cv_search.controller;
-import fr.univ_lyon1.info.m1.cv_search.model.AllAboveThresholdStrategy;
 import fr.univ_lyon1.info.m1.cv_search.model.Applicant;
 import fr.univ_lyon1.info.m1.cv_search.model.ApplicantList;
-import fr.univ_lyon1.info.m1.cv_search.model.AverageAboveThresholdStrategy;
 import fr.univ_lyon1.info.m1.cv_search.model.SelectionStrategy;
+import fr.univ_lyon1.info.m1.cv_search.model.StrategyFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,17 +67,14 @@ public class Controller {
 
 
     /**
-     * Set strategy choice and send it to the model.
+     * Set strategy choice and send it to StrategyFactor that implements the factory method.
      * @param label strategy choice 
      */
     public void setStrategyFromLabel(final String label) {
-        switch (label) {
-            case "ALL >= 50" -> setStrategy(new AllAboveThresholdStrategy(50));
-            case "ALL >= 60" -> setStrategy(new AllAboveThresholdStrategy(60));
-            case "AVERAGE >= 50" -> setStrategy(new AverageAboveThresholdStrategy(50));
-            default -> setStrategy(null);
-        }
+        setStrategy(StrategyFactory.createStrategy(label));
+        
     }
+
    //----Search----
 
 
