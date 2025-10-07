@@ -17,4 +17,29 @@ public class MedianAboveThresholdStrategy implements SelectionStrategy{
         this.threshold = threshold;
     }
 
+
+    /**
+     *
+     * @param applicant
+     * @param requiredSkills
+     * @return
+     */
+    public boolean isSelect (final Applicant applicant, final List<String> requiredSkills){
+
+        int total = 0;
+        int count = 0;
+
+        for (String skill : requiredSkills) {
+            total += applicant.getSkill(skill);
+            count++;
+        }
+
+        if (count == 0) {
+            return false;
+        }
+        double average = (double) total / count;
+        return average >= threshold;
+
+    }
+
 }
