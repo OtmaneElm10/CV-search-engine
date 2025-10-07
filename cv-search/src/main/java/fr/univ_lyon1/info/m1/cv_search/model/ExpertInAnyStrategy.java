@@ -1,7 +1,7 @@
 package fr.univ_lyon1.info.m1.cv_search.model;
 import java.util.List;
 
-public class ExpertInAnyStrategy implements Strategy {
+public class ExpertInAnyStrategy implements SelectionStrategy {
 
     private int threshold;
 
