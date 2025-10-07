@@ -26,6 +26,7 @@ public final class StrategyFactory {
             case "ALL >= 50" -> new AllAboveThresholdStrategy(50);
             case "ALL >= 60" -> new AllAboveThresholdStrategy(60);
             case "AVERAGE >= 50" -> new AverageAboveThresholdStrategy(50);
+
             default -> null; // ou une stratégie par défaut
         };
 
