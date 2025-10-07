@@ -18,6 +18,11 @@ public class Applicant {
         return skills.getOrDefault(skillName, 0);
     }
 
+
+    public Map<String, Integer> getSkills() {
+        return skills;
+    }
+
     /**
      * Assign score.
      * @param skillName the name of the skill 

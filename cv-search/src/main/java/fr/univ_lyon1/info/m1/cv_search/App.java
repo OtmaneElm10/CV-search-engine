@@ -25,7 +25,12 @@ public class App extends Application {
         //Construction of controller
         Controller controller = new Controller(model);
 
+
+        //first view
         new JfxView(stage, 600, 600, model, controller);
+
+        //second view
+        new JfxView(new Stage(), 400, 400, model, controller);
     }
 
 

@@ -43,4 +43,19 @@ public class AverageAboveThresholdStrategy implements SelectionStrategy {
         double average = (double) total / count;
         return average >= threshold;
     }
+
+    /**
+     * Return label strategy choice.
+     */
+    public String getLabel() {
+        return "AVERAGE >= " + threshold;
+
+    }
+
+    
+    public int getThreshold() {
+        return threshold;
+
+    }
+
 }

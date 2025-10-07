@@ -18,6 +18,12 @@ public interface SelectionStrategy {
     boolean isSelected(Applicant applicant,  List<String> skills);
 
     /**
+     *Return label selected strategy (string).
+     * @return string of the selected strategy by the user
+     */
+    String getLabel();
+
+    /**
      * textual rapresentation.
      */
     @Override
