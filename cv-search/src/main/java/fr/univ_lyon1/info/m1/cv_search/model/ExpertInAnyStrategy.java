@@ -1,6 +1,10 @@
 package fr.univ_lyon1.info.m1.cv_search.model;
 import java.util.List;
 
+/**
+ * @brief this Stgrategy has been creating to diplay all candidates who is an expert in on or plus selected skills
+ * that mean 70% or more in one of selected skills
+ */
 public class ExpertInAnyStrategy implements SelectionStrategy {
 
     private int threshold;

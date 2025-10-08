@@ -205,7 +205,8 @@ public class JfxView implements Observer {
         comboBox.getItems().addAll(
             "ALL >= 50",
             "ALL >= 60",
-            "AVERAGE >= 50"
+            "AVERAGE >= 50",
+                "EXPERT >= 70"
         );
         
         comboBox.setValue("ALL >= 50");
