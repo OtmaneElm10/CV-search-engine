@@ -112,4 +112,5 @@ public class ApplicantList implements Iterable<Applicant>, Observable {
 
         return selected;
     }
+
 }
