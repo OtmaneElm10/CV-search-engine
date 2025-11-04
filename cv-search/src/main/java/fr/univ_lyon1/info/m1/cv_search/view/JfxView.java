@@ -258,9 +258,25 @@ public class JfxView implements Observer {
     private void refreshSkills() {
         searchSkillsBox.getChildren().clear();
         for (String skill : controller.getRequiredSkills()) {
-            Button skillBtn = new Button(skill);
-            searchSkillsBox.getChildren().add(skillBtn);
-            skillBtn.setOnAction(e -> controller.removeSkill(skill));
+
+            // box creation to store skill and remove button
+            HBox skillBox= new HBox();
+            skillBox.setSpacing(5);
+
+            //label for the skill
+            Label skillName=new Label(skill);
+
+            //remove button
+            Button removeBtn = new Button("X");
+            removeBtn.setOnAction(e-> controller.removeSkill(skill));
+
+            //add skill label and remove btn in the skillbox
+            skillBox.getChildren().addAll(skillName,removeBtn);
+
+            //add skillbox in the main
+            searchSkillsBox.getChildren().add(skillBox);
+
+
         }
     }
    
