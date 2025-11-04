@@ -18,6 +18,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.geometry.Pos;
+
 
 /**
  * Main view of the application, implemented using JavaFX.
@@ -261,14 +263,20 @@ public class JfxView implements Observer {
 
             // box creation to store skill and remove button
             HBox skillBox= new HBox();
-            skillBox.setSpacing(5);
 
             //label for the skill
             Label skillName=new Label(skill);
 
             //remove button
             Button removeBtn = new Button("X");
-            removeBtn.setOnAction(e-> controller.removeSkill(skill));
+            removeBtn.setOnMouseClicked(e-> controller.removeSkill(skill));
+
+            skillBox.setStyle("-fx-padding: 2;" + "-fx-border-style: solid inside;"
+                    + "-fx-border-width: 1;" + "-fx-border-insets: 5;"
+                    + "-fx-border-radius: 5;" + "-fx-border-color: black;");
+
+            skillBox.setAlignment(Pos.BASELINE_CENTER);
+
 
             //add skill label and remove btn in the skillbox
             skillBox.getChildren().addAll(skillName,removeBtn);
