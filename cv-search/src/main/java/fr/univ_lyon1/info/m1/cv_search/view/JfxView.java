@@ -262,14 +262,14 @@ public class JfxView implements Observer {
         for (String skill : controller.getRequiredSkills()) {
 
             // box creation to store skill and remove button
-            HBox skillBox= new HBox();
+            HBox skillBox = new HBox();
 
             //label for the skill
-            Label skillName=new Label(skill);
+            Label skillName = new Label(skill);
 
             //remove button
             Button removeBtn = new Button("X");
-            removeBtn.setOnMouseClicked(e-> controller.removeSkill(skill));
+            removeBtn.setOnMouseClicked(e -> controller.removeSkill(skill));
 
             skillBox.setStyle("-fx-padding: 2;" + "-fx-border-style: solid inside;"
                     + "-fx-border-width: 1;" + "-fx-border-insets: 5;"
@@ -279,7 +279,7 @@ public class JfxView implements Observer {
 
 
             //add skill label and remove btn in the skillbox
-            skillBox.getChildren().addAll(skillName,removeBtn);
+            skillBox.getChildren().addAll(skillName, removeBtn);
 
             //add skillbox in the main
             searchSkillsBox.getChildren().add(skillBox);
