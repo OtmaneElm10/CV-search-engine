@@ -20,7 +20,7 @@ public class App extends Application {
     @Override
     public void start(final Stage stage) throws Exception { //À MODIFIER 
         //Construction of model
-        ApplicantList model = new ApplicantListBuilder(new File("Candidats")).build();
+        ApplicantList model = new ApplicantListBuilder(new File(".")).build();
         
         //Construction of controller
         Controller controller = new Controller(model);
