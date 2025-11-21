@@ -19,6 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.geometry.Pos;
+import fr.univ_lyon1.info.m1.cv_search.model.StrategyType;
 
 
 /**
@@ -27,7 +28,7 @@ import javafx.geometry.Pos;
 public class JfxView implements Observer {
     private HBox searchSkillsBox;
     private VBox resultBox;
-    private ComboBox<String> comboBox;
+    private ComboBox<StrategyType> comboBox;
     private ApplicantList applicantList;
     private Controller controller;
     private Label strategyLabel;
@@ -85,12 +86,6 @@ public class JfxView implements Observer {
         refreshStrategy();
     }
 
-    /**
-     * Type of strategy.
-     */
-    public enum StrategyType {
-        ALL, AVERAGE
-    }
 
     /**
      * Item for ComboBox, holding a label and a strategy.
@@ -204,26 +199,26 @@ public class JfxView implements Observer {
         strategyLabel = new Label();
 
         comboBox = new ComboBox<>();
-        comboBox.getItems().addAll(
-            "ALL >= 50",
-            "ALL >= 60",
-            "AVERAGE >= 50",
-                "EXPERT >= 70"
-        );
-        
-        comboBox.setValue("ALL >= 50");
+
+        comboBox.getItems().addAll(StrategyType.values());
+
+        comboBox.setValue(controller.getStrategyType());
+
 
         comboBox.setOnAction(event -> {
-            String choice = comboBox.getValue();
-            controller.setStrategyFromLabel(choice); 
-
+            StrategyType choice = comboBox.getValue();
+            controller.setStrategy(choice);
         });
 
-        HBox box = new HBox(strategyLabel, comboBox);
+        HBox box = new HBox(label, strategyLabel, comboBox);
         box.setSpacing(10);
 
-
+        
+        
         return box;
+
+
+
     }
 
     
@@ -248,7 +243,7 @@ public class JfxView implements Observer {
     private void refreshStrategy() {
 
         //update comboBox status
-        comboBox.getSelectionModel().select(controller.getStrategyLabel());
+        comboBox.getSelectionModel().select(controller.getStrategyType());
 
         //selected strategy
         strategyLabel.setText("Stratégie : " + controller.getStrategyLabel());
