@@ -1,0 +1,23 @@
+name: Antoine Dupont
+skills:
+  c: 80
+  "c++": 78
+  python: 60
+  "linux kernel": 70
+  "embedded systems": 85
+experience:
+  "AutoEmbedded":
+    start: 2011
+    end: 2017
+    keywords:
+      - c
+      - "embedded systems"
+      - "realtime"
+  "IoT-Systems":
+    start: 2017
+    end: 2025
+    keywords:
+      - "c++"
+      - linux
+      - "linux kernel"
+      - iot

@@ -3,6 +3,7 @@ import fr.univ_lyon1.info.m1.cv_search.model.Applicant;
 import fr.univ_lyon1.info.m1.cv_search.model.ApplicantList;
 import fr.univ_lyon1.info.m1.cv_search.model.SelectionStrategy;
 import fr.univ_lyon1.info.m1.cv_search.model.StrategyFactory;
+import fr.univ_lyon1.info.m1.cv_search.model.StrategyType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ public class Controller {
 
     private final ApplicantList applicantList;
     private SelectionStrategy strategy;
+    private StrategyType strategyType = StrategyType.ALL_50;
     private final List<String> requiredskills = new ArrayList<>();
 
     /**
@@ -25,6 +27,8 @@ public class Controller {
      */
     public Controller(final ApplicantList applicantList) {
         this.applicantList = applicantList;
+        //strategy initialisation
+        this.strategy = StrategyFactory.createStrategy(strategyType);
     }
 
 
@@ -52,28 +56,62 @@ public class Controller {
 
 
 
+    public List<String> getRequiredSkills() {
+        return requiredskills;
+    }
+    
+    /**
+     * Return list of skill where the applicant is considered like an expert.
+     * @param a applicant
+     * @return list of skills
+     */
+    public List<String> getExpertSkills(final Applicant a) {
+        return strategy.getHighlightSkills(a, requiredskills);
+    }
 
+
+    
    //----Strategy----
 
 
     /**
      * Choose the strategy and notify observers.
-     * @param strategy strategy picked by the user
+     * @param type strategy type picked by the user
      */
-    public void setStrategy(final SelectionStrategy strategy) {
-        this.strategy = strategy;
+    public void setStrategy(final StrategyType type) {
+        this.strategyType = type;
+        this.strategy = StrategyFactory.createStrategy(type);
         applicantList.notifyObservers();
     }
 
 
     /**
-     * Set strategy choice and send it to StrategyFactor that implements the factory method.
-     * @param label strategy choice 
+     * return selected strategy.
+     * @return current strategy
      */
-    public void setStrategyFromLabel(final String label) {
-        setStrategy(StrategyFactory.createStrategy(label));
-        
+    public SelectionStrategy geStrategy() {
+        return strategy;
     }
+
+
+    /**
+     * get Label of the strategy.
+     * @return label
+     */
+    public String getStrategyLabel() {
+        return strategyType.getLabel();
+    }
+
+
+
+    /**
+     * get type of strategy.
+     * @return type of strategy
+     */
+    public StrategyType getStrategyType() {
+        return strategyType;
+    }
+
 
    //----Search----
 
@@ -85,22 +123,7 @@ public class Controller {
         applicantList.notifyObservers();
     }
 
-   //----Getters----
-
-    public List<String> getRequiredSkills() {
-        return requiredskills;
-    }
-
-    public SelectionStrategy getStrategy() {
-        return strategy;
-    }
-
-    public String getStrategyLabel() {
-        return strategy != null ? strategy.getLabel() : "Aucune stratégie";
-
-    }
-
-
+   
 
   //----Selection----
 

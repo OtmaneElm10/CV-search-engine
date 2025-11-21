@@ -1,0 +1,20 @@
+name: Lucas Moreau
+skills:
+  sql: 88
+  "data analysis": 75
+  python: 70
+  java: 65
+experience:
+  "BankOne":
+    start: 2010
+    end: 2017
+    keywords:
+      - sql
+      - "data analysis"
+  "InsurData":
+    start: 2017
+    end: 2025
+    keywords:
+      - sql
+      - python
+      - "risk modeling"

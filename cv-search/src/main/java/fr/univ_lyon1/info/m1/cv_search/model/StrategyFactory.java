@@ -18,15 +18,14 @@ public final class StrategyFactory {
     
     /**
      * Set strategy selected by the user.
-     * @param label label of the choosed strategy
-     * @return
+     * @param type strategy type
      */
-    public static SelectionStrategy createStrategy(final String label) {
-        return switch (label) {
-            case "ALL >= 50" -> new AllAboveThresholdStrategy(50);
-            case "ALL >= 60" -> new AllAboveThresholdStrategy(60);
-            case "AVERAGE >= 50" -> new AverageAboveThresholdStrategy(50);
-            case "EXPERT >= 70" -> new ExpertInAnyStrategy(70);
+    public static SelectionStrategy createStrategy(final StrategyType type) {
+        return switch (type) {
+            case ALL_50 -> new AllAboveThresholdStrategy(50);
+            case ALL_60 -> new AllAboveThresholdStrategy(60);
+            case AVG_50 -> new AverageAboveThresholdStrategy(50);
+            case EXPERT_70 -> new ExpertInAnyStrategy(70);
 
             default -> null; // ou une stratégie par défaut
         };
