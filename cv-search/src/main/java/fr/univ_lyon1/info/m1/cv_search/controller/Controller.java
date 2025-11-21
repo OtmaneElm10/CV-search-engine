@@ -59,6 +59,15 @@ public class Controller {
     public List<String> getRequiredSkills() {
         return requiredskills;
     }
+    
+    /**
+     * Return list of skill where the applicant is considered like an expert.
+     * @param a applicant
+     * @return list of skills
+     */
+    public List<String> getExpertSkills(final Applicant a) {
+        return strategy.getHighlightSkills(a, requiredskills);
+    }
 
 
     

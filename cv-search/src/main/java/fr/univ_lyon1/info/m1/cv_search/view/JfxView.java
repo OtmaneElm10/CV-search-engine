@@ -6,6 +6,9 @@ import fr.univ_lyon1.info.m1.cv_search.model.Applicant;
 import fr.univ_lyon1.info.m1.cv_search.model.ApplicantList;
 import fr.univ_lyon1.info.m1.cv_search.model.SelectionStrategy;
 import fr.univ_lyon1.info.m1.cv_search.model.Observer;
+
+import java.util.List;
+
 import fr.univ_lyon1.info.m1.cv_search.controller.Controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -231,8 +234,15 @@ public class JfxView implements Observer {
         resultBox.getChildren().clear();
         for (Applicant a : controller.getSelectedApplicants()) {
             String text = a.getName()
-                + " - Moyenne : "
+                + " - Moyenne skills selectionnées : "
                 + String.format("%.2f", a.getAverage(controller.getRequiredSkills()));
+                
+                
+            List<String> expertSkills = controller.getExpertSkills(a);
+            if (!expertSkills.isEmpty()) {
+                text += " (expert en " + String.join(", ", expertSkills) + ")";
+            }
+               
             resultBox.getChildren().add(new Label(text));
         }
     }
