@@ -1,0 +1,23 @@
+name: Julie Leroy
+skills:
+  python: 95
+  "machine learning": 90
+  "deep learning": 85
+  pandas: 88
+  sql: 70
+experience:
+  "DataLab":
+    start: 2015
+    end: 2020
+    keywords:
+      - python
+      - "machine learning"
+      - "data analysis"
+  "VisionAI":
+    start: 2020
+    end: 2025
+    keywords:
+      - "deep learning"
+      - "computer vision"
+      - pytorch
+      - python

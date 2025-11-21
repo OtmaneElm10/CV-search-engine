@@ -1,0 +1,20 @@
+name: Emma Bernard
+skills:
+  javascript: 90
+  typescript: 80
+  react: 85
+  java: 55
+experience:
+  "WebStudio":
+    start: 2016
+    end: 2020
+    keywords:
+      - javascript
+      - react
+  "EcommercePlus":
+    start: 2020
+    end: 2025
+    keywords:
+      - typescript
+      - react
+      - "micro frontends"

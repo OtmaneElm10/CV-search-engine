@@ -1,0 +1,23 @@
+name: Marc Petit
+skills:
+  javascript: 88
+  nodejs: 82
+  "express.js": 78
+  mongodb: 75
+  typescript: 70
+experience:
+  "WebApps Studio":
+    start: 2014
+    end: 2019
+    keywords:
+      - javascript
+      - nodejs
+      - "rest api"
+  "RealtimeChat":
+    start: 2019
+    end: 2025
+    keywords:
+      - nodejs
+      - "express.js"
+      - websocket
+      - mongodb

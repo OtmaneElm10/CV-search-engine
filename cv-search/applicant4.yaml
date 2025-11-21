@@ -1,0 +1,21 @@
+name: Mohamed Ali
+skills:
+  c: 60
+  "c++": 85
+  rust: 70
+  linux: 80
+experience:
+  "EmbeddedCorp":
+    start: 2014
+    end: 2019
+    keywords:
+      - c
+      - "c++"
+      - "embedded systems"
+  "CloudX":
+    start: 2019
+    end: 2025
+    keywords:
+      - linux
+      - rust
+      - kubernetes

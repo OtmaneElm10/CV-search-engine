@@ -1,0 +1,19 @@
+name: Alice Durand
+skills:
+  java: 85
+  python: 95
+  "machine learning": 80
+experience:
+  IBM:
+    start: 2012
+    end: 2016
+    keywords:
+      - java
+      - spring
+  Spotify:
+    start: 2016
+    end: 2023
+    keywords:
+      - python
+      - "data engineering"
+      - "machine learning"

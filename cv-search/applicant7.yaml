@@ -1,0 +1,23 @@
+name: Sofia Martin
+skills:
+  java: 92
+  spring: 88
+  "spring boot": 85
+  docker: 75
+  kubernetes: 65
+experience:
+  "TechBank":
+    start: 2013
+    end: 2018
+    keywords:
+      - java
+      - spring
+      - "microservices"
+  "FinCloud":
+    start: 2018
+    end: 2025
+    keywords:
+      - "spring boot"
+      - docker
+      - kubernetes
+      - "cloud"
