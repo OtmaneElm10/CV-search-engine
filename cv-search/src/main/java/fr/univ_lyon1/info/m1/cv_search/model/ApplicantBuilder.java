@@ -3,7 +3,9 @@ package fr.univ_lyon1.info.m1.cv_search.model;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.Map;
+
 
 import org.yaml.snakeyaml.Yaml;
 
@@ -60,8 +62,10 @@ public class ApplicantBuilder {
 
             int  start = (int) info.get("start");
             int end = (int) info.get("end");
-            int duree = end - start;
-            a.
+            List<String> keywords = (List<String>) info.get("keywords");
+
+            Experience e = new Experience(entreprise, start, end, keywords);
+            a.addExperience(e);
 
 
         }
