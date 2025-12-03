@@ -48,10 +48,22 @@ public class ApplicantBuilder {
         // clean error messages.
         @SuppressWarnings("unchecked")
         Map<String, Integer> skills = (Map<String, Integer>) map.get("skills");
+        Map<String, Object> experience = (Map<String, Object>) map.get("experience");
 
         for (String skill : skills.keySet()) {
             Integer value = skills.get(skill);
             a.setSkill(skill, value);
+        }
+
+        for (String entreprise : experience.keySet()) {
+            Map<String, Object> info = (Map<String, Object>) experience.get(entreprise);
+
+            int  start = (int) info.get("start");
+            int end = (int) info.get("end");
+            int duree = end - start;
+            a.
+
+
         }
 
         return a;
