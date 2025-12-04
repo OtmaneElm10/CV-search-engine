@@ -6,6 +6,8 @@ import fr.univ_lyon1.info.m1.cv_search.model.Applicant;
 import fr.univ_lyon1.info.m1.cv_search.model.ApplicantList;
 import fr.univ_lyon1.info.m1.cv_search.model.SelectionStrategy;
 import fr.univ_lyon1.info.m1.cv_search.model.Observer;
+import fr.univ_lyon1.info.m1.cv_search.model.SortByExperienceDesc;
+
 
 import java.util.List;
 
@@ -72,6 +74,10 @@ public class JfxView implements Observer {
 
         Node strategyWidget = strategyChoiceStrategyWidget();
         root.getChildren().add(strategyWidget);
+
+        Node sortWidget = createSortWidget();
+        root.getChildren().add(sortWidget);
+
 
         Scene scene = new Scene(root, width, height);
         stage.setScene(scene);
@@ -223,8 +229,34 @@ public class JfxView implements Observer {
 
 
     }
+    private Node createSortWidget() {
+        Label label = new Label("Tri : ");
 
-    
+        ComboBox<String> sortCombo = new ComboBox<>();
+        sortCombo.getItems().add("Aucun tri"); // valeur par défaut
+        sortCombo.getItems().add("Années d'expérience (décroissant)");
+
+        sortCombo.setValue("Aucun tri");  // valeur affichée au démarrage
+
+        sortCombo.setOnAction(event -> {
+            String choice = sortCombo.getValue();
+
+            if (choice.equals("Années d'expérience (décroissant)")) {
+                controller.setSortStrategy(new SortByExperienceDesc());
+            } else {
+                controller.setSortStrategy(null); // désactive le tri
+            }
+
+            controller.search();
+        });
+
+        HBox box = new HBox(label, sortCombo);
+        box.setSpacing(10);
+        return box;
+    }
+
+
+
     //  ----Refresh functions, every function -> 1 responsability ----
     
     /**
@@ -234,8 +266,9 @@ public class JfxView implements Observer {
         resultBox.getChildren().clear();
         for (Applicant a : controller.getSelectedApplicants()) {
             String text = a.getName()
-                + " - Moyenne skills selectionnées : "
-                + String.format("%.2f", a.getAverage(controller.getRequiredSkills()));
+                    + " - Moyenne skills sélectionnées : "
+                    + String.format("%.2f", a.getAverage(controller.getRequiredSkills()))
+                    + " | Expérience totale : " + a.getTotalExperience() + " ans";
                 
                 
             List<String> expertSkills = controller.getExpertSkills(a);
