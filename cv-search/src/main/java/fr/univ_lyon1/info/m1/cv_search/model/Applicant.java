@@ -1,5 +1,6 @@
 package fr.univ_lyon1.info.m1.cv_search.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import java.util.Map;
 public class Applicant {
     private Map<String, Integer> skills = new HashMap<>();
     private String name;
+    private List<Experience> experience = new ArrayList<>();
 
     /**
      * Get the score for a given skill.
@@ -67,6 +69,15 @@ public class Applicant {
         }
 
         return (count > 0) ? total / count : 0.0;
+    }
+
+
+    /**
+     * Add experience to the list of experiences.
+     * @param exp experience
+     */
+    public void addExperience(final Experience exp) {
+        experience.add(exp);
     }
 
 }

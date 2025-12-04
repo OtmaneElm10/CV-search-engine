@@ -3,7 +3,9 @@ package fr.univ_lyon1.info.m1.cv_search.model;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.Map;
+
 
 import org.yaml.snakeyaml.Yaml;
 
@@ -48,10 +50,24 @@ public class ApplicantBuilder {
         // clean error messages.
         @SuppressWarnings("unchecked")
         Map<String, Integer> skills = (Map<String, Integer>) map.get("skills");
+        Map<String, Object> experience = (Map<String, Object>) map.get("experience");
 
         for (String skill : skills.keySet()) {
             Integer value = skills.get(skill);
             a.setSkill(skill, value);
+        }
+
+        for (String entreprise : experience.keySet()) {
+            Map<String, Object> info = (Map<String, Object>) experience.get(entreprise);
+
+            int  start = (int) info.get("start");
+            int end = (int) info.get("end");
+            List<String> keywords = (List<String>) info.get("keywords");
+
+            Experience e = new Experience(entreprise, start, end, keywords);
+            a.addExperience(e);
+
+
         }
 
         return a;

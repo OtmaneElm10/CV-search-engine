@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * ApplicantDao interface.
+ * ApplicantDao (used to stock the list of applicants).
  */
 public class ApplicantDao implements Dao<Applicant, String> {
     private final List<Applicant> applicants = new ArrayList<>();
