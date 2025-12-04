@@ -72,6 +72,11 @@ public class Applicant {
     }
 
 
+    public List<Experience> getExperience() {
+        return experience;
+    }
+
+
     /**
      * Add experience to the list of experiences.
      * @param exp experience
