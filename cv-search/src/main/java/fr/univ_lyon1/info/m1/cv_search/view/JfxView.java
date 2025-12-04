@@ -3,7 +3,6 @@ package fr.univ_lyon1.info.m1.cv_search.view;
 
 
 import fr.univ_lyon1.info.m1.cv_search.model.Applicant;
-import fr.univ_lyon1.info.m1.cv_search.model.ApplicantList;
 import fr.univ_lyon1.info.m1.cv_search.model.SelectionStrategy;
 import fr.univ_lyon1.info.m1.cv_search.model.Observer;
 import fr.univ_lyon1.info.m1.cv_search.model.SortByExperienceDesc;
@@ -34,7 +33,9 @@ public class JfxView implements Observer {
     private HBox searchSkillsBox;
     private VBox resultBox;
     private ComboBox<StrategyType> comboBox;
-    private ApplicantList applicantList;
+
+
+
     private Controller controller;
     private Label strategyLabel;
 
@@ -49,12 +50,10 @@ public class JfxView implements Observer {
      * @param model link to the model
      * @param controller link to the controller
      */
-    public JfxView(final Stage stage, final int width, final int height,
-        final ApplicantList model, final Controller controller) {
-        this.applicantList = model;
-        this.controller = controller;
-        applicantList.addObserver(this);
+    public JfxView(final Stage stage, final int width, final int height, final Controller controller) {
 
+        this.controller = controller;
+        controller.registerView(this);
 
         stage.setTitle("Search for CV");
 
@@ -84,7 +83,7 @@ public class JfxView implements Observer {
         stage.show();
     }
 
-    
+
     /**
      * Update results.
      */
@@ -158,7 +157,7 @@ public class JfxView implements Observer {
                 controller.addSkill(text); //inform the controller
                 textField.setText("");
                 textField.requestFocus();
-                //Suppression in update() 
+                //Suppression in update()
             }
         };
 
@@ -222,8 +221,8 @@ public class JfxView implements Observer {
         HBox box = new HBox(label, strategyLabel, comboBox);
         box.setSpacing(10);
 
-        
-        
+
+
         return box;
 
 
@@ -244,7 +243,7 @@ public class JfxView implements Observer {
             if (choice.equals("Années d'expérience (décroissant)")) {
                 controller.setSortStrategy(new SortByExperienceDesc());
             } else {
-                controller.setSortStrategy(null); // désactive le tri
+                controller.setSortStrategy(null);
             }
 
             controller.search();
@@ -258,7 +257,7 @@ public class JfxView implements Observer {
 
 
     //  ----Refresh functions, every function -> 1 responsability ----
-    
+
     /**
      * Refresh the results with candidates who satisfy the requirements.
      */
@@ -269,13 +268,13 @@ public class JfxView implements Observer {
                     + " - Moyenne skills sélectionnées : "
                     + String.format("%.2f", a.getAverage(controller.getRequiredSkills()))
                     + " | Expérience totale : " + a.getTotalExperience() + " ans";
-                
-                
+
+
             List<String> expertSkills = controller.getExpertSkills(a);
             if (!expertSkills.isEmpty()) {
                 text += " (expert en " + String.join(", ", expertSkills) + ")";
             }
-               
+
             resultBox.getChildren().add(new Label(text));
         }
     }
@@ -325,5 +324,5 @@ public class JfxView implements Observer {
 
         }
     }
-   
+
 }
