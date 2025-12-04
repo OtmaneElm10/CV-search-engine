@@ -4,6 +4,8 @@ import fr.univ_lyon1.info.m1.cv_search.model.ApplicantList;
 import fr.univ_lyon1.info.m1.cv_search.model.SelectionStrategy;
 import fr.univ_lyon1.info.m1.cv_search.model.StrategyFactory;
 import fr.univ_lyon1.info.m1.cv_search.model.StrategyType;
+import fr.univ_lyon1.info.m1.cv_search.model.SortStrategy;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,8 @@ public class Controller {
     private SelectionStrategy strategy;
     private StrategyType strategyType = StrategyType.ALL_50;
     private final List<String> requiredskills = new ArrayList<>();
+    private SortStrategy sortStrategy;   // nouvelle variable
+
 
     /**
      * Constructor.
@@ -128,10 +132,22 @@ public class Controller {
   //----Selection----
 
     public List<Applicant> getSelectedApplicants() {
-        return applicantList.getSelectedapplicants(strategy, requiredskills);
+        List<Applicant> selected = applicantList.getSelectedapplicants(strategy, requiredskills);
+
+        // 2. Tri si demandé
+        if (sortStrategy != null) {
+            return sortStrategy.sort(selected);
+        }
+
+        return selected;
     }
 
-   
+    public void setSortStrategy(SortStrategy sortStrategy) {
+        this.sortStrategy = sortStrategy;
+        applicantList.notifyObservers();  // pour que la vue se mette à jour
+    }
+
+
 
 
 }

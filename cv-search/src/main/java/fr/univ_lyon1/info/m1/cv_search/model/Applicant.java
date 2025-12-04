@@ -85,4 +85,13 @@ public class Applicant {
         experience.add(exp);
     }
 
+    public int getTotalExperience() {
+        int total = 0;
+        for (Experience exp : experience) {
+            total += exp.getDuree();
+        }
+        return total;
+    }
+
+
 }
