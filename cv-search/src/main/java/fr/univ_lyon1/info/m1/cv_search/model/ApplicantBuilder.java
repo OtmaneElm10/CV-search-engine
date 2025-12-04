@@ -70,6 +70,8 @@ public class ApplicantBuilder {
 
         }
 
+
+        System.out.println("liste experience : " + a.getExperience());
         return a;
     }
 }

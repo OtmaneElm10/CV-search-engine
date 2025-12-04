@@ -51,6 +51,11 @@ public class Experience {
         return keywords;
     }
 
+    @Override
+    public String toString() {
+        return entreprise + " : " + start + "-" + end + " (" + duree + " ans)"
+            + " | keywords=" + keywords;
+    }
 
     
 }
