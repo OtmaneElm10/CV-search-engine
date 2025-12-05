@@ -6,6 +6,7 @@ import java.util.List;
 
 /**
  * Strategy for sorting applicants by experience in descending order.
+
  */
 public class SortByExperienceDesc implements SortStrategy {
 

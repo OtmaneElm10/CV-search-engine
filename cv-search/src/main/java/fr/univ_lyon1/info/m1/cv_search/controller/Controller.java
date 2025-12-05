@@ -134,30 +134,31 @@ public class Controller {
 
   //----Selection----
 
+
   /**
    * Get list of selected applicants.
    * @return list of selected applicants
    */  
+
     public List<Applicant> getSelectedApplicants() {
         List<Applicant> selected = applicantList.getSelectedapplicants(strategy, requiredskills);
-
-        // 2. Tri si demandé
         if (sortStrategy != null) {
             return sortStrategy.sort(selected);
         }
-
         return selected;
     }
 
-    
+
+
     /**
      * Set sort strategy.
      * @param sortStrategy sort strategy
      */
     public void setSortStrategy(final SortStrategy sortStrategy) {
         this.sortStrategy = sortStrategy;
-        applicantList.notifyObservers();  // pour que la vue se mette à jour
+        applicantList.notifyObservers();
     }
+
 
 
     
@@ -175,6 +176,7 @@ public class Controller {
     /**
      * Apply sort strategy.
      * @param shortType sort strategy
+
      */
     public void applySortStrategy(final String shortType) {
         if ("Années d'expérience (décroissant)".equals(shortType)) {
