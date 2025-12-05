@@ -15,7 +15,7 @@ public enum SortType {
     }
 
     /**
-     * Get label
+     * Get label.
      * @return label
      */
     public String getLabel() {
@@ -23,11 +23,11 @@ public enum SortType {
     }
 
     /**
-     * Find the shorttype from the lable
+     * Find the shorttype from the lable.
      * @param text string from combobox
      * @return the coresponding shorttype or NONE
      */
-    public static SortType fromLabel(String text) {
+    public static SortType fromLabel(final String text) {
 
         for (SortType t : values()) {
             if (t.label.equals(text)) {
