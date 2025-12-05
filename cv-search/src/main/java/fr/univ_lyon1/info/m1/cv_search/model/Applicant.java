@@ -71,7 +71,10 @@ public class Applicant {
         return (count > 0) ? total / count : 0.0;
     }
 
-
+    /**
+     * Get experience.
+     * @return experience
+     */
     public List<Experience> getExperience() {
         return experience;
     }

@@ -6,7 +6,7 @@ import java.util.List;
 public class SortByExperienceDesc implements SortStrategy {
 
     @Override
-    public List<Applicant> sort(List<Applicant> applicants) {
+    public List<Applicant> sort(final List<Applicant> applicants) {
         return applicants.stream()
                 .sorted(Comparator.comparingInt(Applicant::getTotalExperience).reversed())
                 .toList();

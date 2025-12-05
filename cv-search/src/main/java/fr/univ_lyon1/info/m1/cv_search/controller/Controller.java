@@ -135,7 +135,7 @@ public class Controller {
   //----Selection----
 
     /**
-     * Get the applicant list filtred by the strategy
+     * Get the applicant list filtred by the strategy.
      * @return an applicant list which is strategy repected
      */
     public List<Applicant> getSelectedApplicants() {
@@ -147,7 +147,7 @@ public class Controller {
     }
 
     /**
-     * set the short strategy
+     * set the short strategy.
      * @param sortStrategy is the short strategy selected
      */
     public void setSortStrategy(SortStrategy sortStrategy) {
@@ -169,7 +169,7 @@ public class Controller {
      * @param shortType is the name of the shot strategy
      */
     public void applySortStrategy(final String shortType) {
-        if("Années d'expérience (décroissant)".equals(shortType)) {
+        if ("Années d'expérience (décroissant)".equals(shortType)) {
             this.sortStrategy = new SortByExperienceDesc();
         } else {
             this.sortStrategy = null;
