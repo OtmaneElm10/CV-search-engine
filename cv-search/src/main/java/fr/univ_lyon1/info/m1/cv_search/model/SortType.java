@@ -3,7 +3,7 @@ package fr.univ_lyon1.info.m1.cv_search.model;
 
 public enum SortType {
 
-    NONE("Aucun")
+    NONE("Aucun"),
     EXPERIENCE_DESC("Années d'expérience (décroissant)");
 
     private final String label;
