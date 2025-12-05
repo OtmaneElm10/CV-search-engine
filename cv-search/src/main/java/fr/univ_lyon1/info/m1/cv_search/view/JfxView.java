@@ -6,7 +6,6 @@ import java.util.List;
 
 import fr.univ_lyon1.info.m1.cv_search.controller.Controller;
 import fr.univ_lyon1.info.m1.cv_search.model.Observer;
-import fr.univ_lyon1.info.m1.cv_search.model.SelectionStrategy;
 import fr.univ_lyon1.info.m1.cv_search.model.StrategyType;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -124,36 +123,6 @@ public class JfxView implements Observer {
     }
 
 
-    /**
-     * Item for ComboBox, holding a label and a strategy.
-     */
-    public static class ComboItem {
-        private String text;
-        private SelectionStrategy strategy;
-
-        /**
-         * Constructor.
-         *
-         * @param text     text shown in the ComboBox
-         * @param strategy the strategy represented
-         */
-        public ComboItem(final String text, final SelectionStrategy strategy) {
-            this.text = text;
-            this.strategy = strategy;
-        }
-
-        
-
-        /**
-         * Display text in the ComboBox.
-         *
-         * @return the text
-         */
-        @Override
-        public String toString() {
-            return text;
-        }
-    }
 
     /**
      * Create the text field to enter a new skill.
@@ -323,7 +292,7 @@ public class JfxView implements Observer {
         List<ApplicantviewData> viewDataList = controller.getApplicantViewDataList();
 
         for (ApplicantviewData a : viewDataList) {
-            // Carte de base
+            // Card de base
             ApplicantCard card = new ApplicantCard(a, controller);
 
             // Application des décorateurs actifs

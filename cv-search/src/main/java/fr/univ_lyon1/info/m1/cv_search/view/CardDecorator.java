@@ -8,7 +8,7 @@ public interface CardDecorator {
     /**
      * Decorate the card.
      * @param card card
-     * @param a applicant dto
+     * @param data applicant dto
      */
-    void decorate(ApplicantCard card, ApplicantviewData a);
+    void decorate(ApplicantCard card, ApplicantviewData data);
 }
