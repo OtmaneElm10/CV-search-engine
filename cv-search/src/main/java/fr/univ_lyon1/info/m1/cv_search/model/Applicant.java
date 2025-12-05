@@ -88,6 +88,10 @@ public class Applicant {
         experience.add(exp);
     }
 
+    /**
+     * Get the total experience duration of an applicant.
+     * @return the int which represent the total experience duration
+     */
     public int getTotalExperience() {
         int total = 0;
         for (Experience exp : experience) {

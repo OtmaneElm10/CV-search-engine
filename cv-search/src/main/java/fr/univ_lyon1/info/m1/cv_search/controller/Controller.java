@@ -156,7 +156,7 @@ public class Controller {
     }
 
     /**
-     * Register a view to observe the model
+     * Register a view to observe the model.
      * @param view is the view to register
      */
     public void registerView(Observer view) {
@@ -165,7 +165,7 @@ public class Controller {
 
 
     /**
-     * Apply a short strategy based on the selected name of the view
+     * Apply a short strategy based on the selected name of the view.
      * @param shortType is the name of the shot strategy
      */
     public void applySortStrategy(final String shortType) {
