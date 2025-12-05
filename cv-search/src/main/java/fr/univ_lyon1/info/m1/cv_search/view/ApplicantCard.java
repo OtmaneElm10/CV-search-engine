@@ -28,19 +28,19 @@ public class ApplicantCard extends VBox {
             -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 1);
             """);
 
-        // --- Nom du candidat ---
+        // Name of the applicant
         Label nameLabel = new Label(a.getName());
         nameLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
 
-        // --- Moyenne des skills sélectionnées ---
+        // Avg of selected skills
         double avg = a.getAverage(controller.getRequiredSkills());
         Label avgLabel = new Label(
             "Moyenne des skills sélectionnées : " + String.format("%.2f", avg));
 
-        // --- Expérience totale ---
+        // total experience
         Label expLabel = new Label("Expérience totale : " + a.getTotalExperience() + " ans");
 
-        // --- Skills experts ---
+        // skills where the applicant is considered expert
         List<String> expertSkills = controller.getExpertSkills(a);
         if (!expertSkills.isEmpty()) {
             Label expertLabel = new Label("Expert en : " + String.join(", ", expertSkills));

@@ -1,7 +1,11 @@
 package fr.univ_lyon1.info.m1.cv_search.view;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import fr.univ_lyon1.info.m1.cv_search.controller.Controller;
+import fr.univ_lyon1.info.m1.cv_search.model.Applicant;
 import fr.univ_lyon1.info.m1.cv_search.model.Observer;
 import fr.univ_lyon1.info.m1.cv_search.model.SelectionStrategy;
 import fr.univ_lyon1.info.m1.cv_search.model.StrategyType;
@@ -11,6 +15,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -28,6 +33,9 @@ public class JfxView implements Observer {
     private HBox searchSkillsBox;
     private VBox resultBox;
     private ComboBox<StrategyType> comboBox;
+    private CheckBox colorExperienceCheckbox;
+    private CheckBox detailExperienceCheckbox;
+
 
 
 
@@ -71,7 +79,7 @@ public class JfxView implements Observer {
 
 
         
-        //search ,sort, skills
+        //sort, skills
         HBox middleSection = new HBox(20);
         middleSection.setStyle("-fx-padding: 10 0 10 0;");
         middleSection.setAlignment(Pos.CENTER_LEFT);
@@ -83,6 +91,11 @@ public class JfxView implements Observer {
         
         middleSection.getChildren().addAll(searchSkillsBox, sortWidget);
         root.getChildren().add(middleSection);
+
+        // display options 
+
+        Node displayOptions = createDisplayOptionsWidget();
+        root.getChildren().add(displayOptions);
 
         
         
@@ -249,10 +262,53 @@ public class JfxView implements Observer {
         box.setSpacing(10);
         return box;
     }
+
+
+    private Node createDisplayOptionsWidget() {
+        HBox box = new HBox(15);
+        box.setAlignment(Pos.CENTER_LEFT);
+        box.setStyle("-fx-padding: 10 0 10 0;");
+
+        Label label = new Label("Options d'affichage :");
+
+        colorExperienceCheckbox = new CheckBox("Couleur selon expérience");
+        detailExperienceCheckbox = new CheckBox("Afficher détails expériences");
+
+        // default
+        colorExperienceCheckbox.setSelected(true);
+        detailExperienceCheckbox.setSelected(true);
+
+        // update when changed
+        colorExperienceCheckbox.setOnAction(e -> refreshResults());
+        detailExperienceCheckbox.setOnAction(e -> refreshResults());
+
+        box.getChildren().addAll(label, colorExperienceCheckbox, detailExperienceCheckbox);
+        
+        return box;
+    }
     
 
 
-//  ----Refresh functions, every function -> 1 responsability ----
+    //  ----Refresh functions, every function -> 1 responsability ----
+
+
+    /** 
+    //active decorator (based on option choose by user), used by refreshResults().
+    */
+    private List<CardDecorator> buildActiveDecorators() {
+        List<CardDecorator> decorators = new ArrayList<>();
+
+        if (colorExperienceCheckbox != null && colorExperienceCheckbox.isSelected()) {
+            decorators.add(new ExperienceColorDecorator());
+        }
+        if (detailExperienceCheckbox != null && detailExperienceCheckbox.isSelected()) {
+            decorators.add(new ExperienceDetailedDecorator());
+        }
+
+        return decorators;
+    }
+
+
 
     /**
      * Refresh the results with candidates who satisfy the requirements.
@@ -263,8 +319,18 @@ public class JfxView implements Observer {
         resultBox.setSpacing(10);
         resultBox.setStyle("-fx-padding: 10;");
 
-        for (var a : controller.getSelectedApplicants()) {
+        // Décorateurs choisis selon les options d’affichage
+        List<CardDecorator> decorators = buildActiveDecorators();
+
+        for (Applicant a : controller.getSelectedApplicants()) {
+            // Carte de base
             ApplicantCard card = new ApplicantCard(a, controller);
+
+            // Application des décorateurs actifs
+            for (CardDecorator decorator : decorators) {
+                decorator.decorate(card, a, controller);
+            }
+
             resultBox.getChildren().add(card);
         }
     }
