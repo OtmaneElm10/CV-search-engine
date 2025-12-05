@@ -167,8 +167,6 @@ public class Controller {
         applicantList.notifyObservers();
     }
 
-
-
     
     /**
      * Register view.

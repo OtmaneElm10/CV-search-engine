@@ -2,7 +2,6 @@ package fr.univ_lyon1.info.m1.cv_search.model;
 
 import java.util.List;
 
-
 /**
  * Strategy to sort by their average score on selected skills.
  */

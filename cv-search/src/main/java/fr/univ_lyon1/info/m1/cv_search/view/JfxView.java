@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.univ_lyon1.info.m1.cv_search.controller.Controller;
+
 import fr.univ_lyon1.info.m1.cv_search.model.Observer;
 import fr.univ_lyon1.info.m1.cv_search.model.StrategyType;
 
@@ -220,7 +221,7 @@ public class JfxView implements Observer {
         sortCombo.getItems().add("Default"); // valeur par défaut
         sortCombo.getItems().add("Années d'expérience (décroissant)");
 
-        sortCombo.setValue("Aucun tri");  // valeur affichée au démarrage
+        sortCombo.setValue("Default");  // valeur affichée au démarrage
 
         sortCombo.setOnAction(event -> {
             String choice = sortCombo.getValue();
