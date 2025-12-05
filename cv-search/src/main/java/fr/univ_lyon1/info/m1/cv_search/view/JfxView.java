@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.univ_lyon1.info.m1.cv_search.controller.Controller;
+
 import fr.univ_lyon1.info.m1.cv_search.model.Observer;
 import fr.univ_lyon1.info.m1.cv_search.model.StrategyType;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -216,10 +218,10 @@ public class JfxView implements Observer {
         Label label = new Label("Tri : ");
 
         ComboBox<String> sortCombo = new ComboBox<>();
-        sortCombo.getItems().add("Aucun tri"); // valeur par défaut
+        sortCombo.getItems().add("Default"); // valeur par défaut
         sortCombo.getItems().add("Années d'expérience (décroissant)");
 
-        sortCombo.setValue("Aucun tri");  // valeur affichée au démarrage
+        sortCombo.setValue("Default");  // valeur affichée au démarrage
 
         sortCombo.setOnAction(event -> {
             String choice = sortCombo.getValue();

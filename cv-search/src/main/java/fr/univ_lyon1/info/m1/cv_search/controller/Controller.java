@@ -7,10 +7,15 @@ import fr.univ_lyon1.info.m1.cv_search.model.ApplicantList;
 import fr.univ_lyon1.info.m1.cv_search.model.Experience;
 import fr.univ_lyon1.info.m1.cv_search.model.Observer;
 import fr.univ_lyon1.info.m1.cv_search.model.SelectionStrategy;
-import fr.univ_lyon1.info.m1.cv_search.model.SortByExperienceDesc;
+import fr.univ_lyon1.info.m1.cv_search.model.SortByAverageDesc;
+
 import fr.univ_lyon1.info.m1.cv_search.model.SortStrategy;
 import fr.univ_lyon1.info.m1.cv_search.model.StrategyFactory;
 import fr.univ_lyon1.info.m1.cv_search.model.StrategyType;
+
+import fr.univ_lyon1.info.m1.cv_search.model.SortStrategyFactory;
+import fr.univ_lyon1.info.m1.cv_search.model.SortType;
+
 import fr.univ_lyon1.info.m1.cv_search.view.ApplicantviewData;
 
 
@@ -142,10 +147,13 @@ public class Controller {
 
     public List<Applicant> getSelectedApplicants() {
         List<Applicant> selected = applicantList.getSelectedapplicants(strategy, requiredskills);
+
         if (sortStrategy != null) {
             return sortStrategy.sort(selected);
         }
-        return selected;
+
+        SortStrategy defaultSort = new SortByAverageDesc(requiredskills);
+        return defaultSort.sort(selected);
     }
 
 
@@ -159,8 +167,6 @@ public class Controller {
         applicantList.notifyObservers();
     }
 
-
-
     
     /**
      * Register view.
@@ -171,20 +177,18 @@ public class Controller {
     }
 
 
-
-    
     /**
      * Apply sort strategy.
-     * @param shortType sort strategy
-
+     * @param sortLabel sort strategy
      */
-    public void applySortStrategy(final String shortType) {
-        if ("Années d'expérience (décroissant)".equals(shortType)) {
-            this.sortStrategy = new SortByExperienceDesc();
-        } else {
-            this.sortStrategy = null;
-        }
+
+    public void applySortStrategy(final String sortLabel) {
+
+        SortType type = SortType.fromLabel(sortLabel);
+        this.sortStrategy = SortStrategyFactory.createSortStrategy(type);
+
         applicantList.notifyObservers();
+
     }
 
 
