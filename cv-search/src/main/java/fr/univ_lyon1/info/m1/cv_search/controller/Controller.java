@@ -134,14 +134,12 @@ public class Controller {
 
   //----Selection----
 
-<<<<<<< HEAD
 
-=======
   /**
    * Get list of selected applicants.
    * @return list of selected applicants
    */  
->>>>>>> main
+
     public List<Applicant> getSelectedApplicants() {
         List<Applicant> selected = applicantList.getSelectedapplicants(strategy, requiredskills);
         if (sortStrategy != null) {
@@ -150,44 +148,35 @@ public class Controller {
         return selected;
     }
 
-<<<<<<< HEAD
 
-=======
 
     /**
      * Set sort strategy.
      * @param sortStrategy sort strategy
->>>>>>> main
      */
     public void setSortStrategy(final SortStrategy sortStrategy) {
         this.sortStrategy = sortStrategy;
         applicantList.notifyObservers();
     }
 
-<<<<<<< HEAD
 
-=======
 
     
     /**
      * Register view.
      * @param view current view
->>>>>>> main
      */
     public void registerView(final Observer view) {
         applicantList.addObserver(view);
     }
 
 
-<<<<<<< HEAD
-
-=======
 
     
     /**
      * Apply sort strategy.
      * @param shortType sort strategy
->>>>>>> main
+
      */
     public void applySortStrategy(final String shortType) {
         if ("Années d'expérience (décroissant)".equals(shortType)) {

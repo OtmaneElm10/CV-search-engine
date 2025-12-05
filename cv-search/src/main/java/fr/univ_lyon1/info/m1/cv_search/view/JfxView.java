@@ -44,12 +44,10 @@ public class JfxView implements Observer {
      * @param height the window height
      * @param controller link to the controller
      */
-<<<<<<< HEAD
+
     public JfxView(final Stage stage, final int width, final int height,
                    final Controller controller) {
-=======
 
->>>>>>> main
 
         this.controller = controller;
         controller.registerView(this);
