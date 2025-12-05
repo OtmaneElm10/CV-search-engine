@@ -213,7 +213,7 @@ public class Controller {
 
     
     /**
-     * construction of applicant dto.
+     * construction of applicants dtos.
      * @return result dto
      */
    
