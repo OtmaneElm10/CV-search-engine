@@ -7,11 +7,11 @@ package fr.univ_lyon1.info.m1.cv_search.model;
 public class SortStrategyFactory {
 
     /**
-     * Create a strategy based on the type
+     * Create a strategy based on the type.
      * @param type is the type of short choosed
      * @return the strategy or null if nothing has been choose
      */
-    public static SortStrategy createSortStrategy(SortType type) {
+    public static SortStrategy createSortStrategy(final SortType type) {
         switch (type) {
             case EXPERIENCE_DESC:
                 return new SortByExperienceDesc();
