@@ -1,0 +1,20 @@
+name: Clara Rossi
+skills:
+  javascript: 65
+  react: 55
+  css: 60
+
+experience:
+  WebAgency:
+    start: 2023
+    end: 2023
+    keywords:
+      - javascript
+      - html
+      - css
+  Freelance:
+    start: 2024
+    end: 2024
+    keywords:
+      - react
+      - frontend

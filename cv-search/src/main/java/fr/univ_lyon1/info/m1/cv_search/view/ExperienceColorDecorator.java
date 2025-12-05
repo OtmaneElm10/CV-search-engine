@@ -15,7 +15,11 @@ public class ExperienceColorDecorator implements CardDecorator {
         int years = applicant.getTotalExperience();
         String extraStyle;
 
-        if (years >= 10) {
+        if (years >= 10) { // we choose a if/else because to know if an applicant is senior,
+            // intermediate or junior, we can simply consider a applicant senior
+            //  when he has more than 10 years of experience, and below 5 years of experience
+            //he is junior, and between the two is intermediate --> only 3 cases possibles
+            
             extraStyle = "-fx-background-color: #d4edda;"; // senior
         } else if (years >= 5) {
             extraStyle = "-fx-background-color: #fff3cd;"; // intermediate
