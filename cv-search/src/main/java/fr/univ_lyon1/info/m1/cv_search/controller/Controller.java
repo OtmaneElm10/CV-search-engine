@@ -5,6 +5,7 @@ import fr.univ_lyon1.info.m1.cv_search.model.SelectionStrategy;
 import fr.univ_lyon1.info.m1.cv_search.model.StrategyFactory;
 import fr.univ_lyon1.info.m1.cv_search.model.StrategyType;
 import fr.univ_lyon1.info.m1.cv_search.model.SortStrategy;
+import fr.univ_lyon1.info.m1.cv_search.model.SortByExperienceDesc;
 import fr.univ_lyon1.info.m1.cv_search.model.Observer;
 
 
@@ -24,7 +25,7 @@ public class Controller {
     private SelectionStrategy strategy;
     private StrategyType strategyType = StrategyType.ALL_50;
     private final List<String> requiredskills = new ArrayList<>();
-    private SortStrategy sortStrategy;   // nouvelle variable
+    private SortStrategy sortStrategy;
 
 
     /**
@@ -155,7 +156,16 @@ public class Controller {
     }
 
 
-}
 
+    public void applySortStrategy(String shortType) {
+        if("Années d'expérience (décroissant)".equals(shortType)) {
+            this.sortStrategy = new SortByExperienceDesc();
+        }
+        else{
+            this.sortStrategy = null;
+        }
+        applicantList.notifyObservers();
+    }
+}
 
 
