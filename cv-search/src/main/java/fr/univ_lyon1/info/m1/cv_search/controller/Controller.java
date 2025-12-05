@@ -1,17 +1,17 @@
 package fr.univ_lyon1.info.m1.cv_search.controller;
-import fr.univ_lyon1.info.m1.cv_search.model.Applicant;
-import fr.univ_lyon1.info.m1.cv_search.model.ApplicantList;
-import fr.univ_lyon1.info.m1.cv_search.model.SelectionStrategy;
-import fr.univ_lyon1.info.m1.cv_search.model.StrategyFactory;
-import fr.univ_lyon1.info.m1.cv_search.model.StrategyType;
-import fr.univ_lyon1.info.m1.cv_search.model.SortStrategy;
-import fr.univ_lyon1.info.m1.cv_search.model.SortByExperienceDesc;
-import fr.univ_lyon1.info.m1.cv_search.model.Observer;
-
-
-
 import java.util.ArrayList;
 import java.util.List;
+
+import fr.univ_lyon1.info.m1.cv_search.model.Applicant;
+import fr.univ_lyon1.info.m1.cv_search.model.ApplicantList;
+import fr.univ_lyon1.info.m1.cv_search.model.Experience;
+import fr.univ_lyon1.info.m1.cv_search.model.Observer;
+import fr.univ_lyon1.info.m1.cv_search.model.SelectionStrategy;
+import fr.univ_lyon1.info.m1.cv_search.model.SortByExperienceDesc;
+import fr.univ_lyon1.info.m1.cv_search.model.SortStrategy;
+import fr.univ_lyon1.info.m1.cv_search.model.StrategyFactory;
+import fr.univ_lyon1.info.m1.cv_search.model.StrategyType;
+import fr.univ_lyon1.info.m1.cv_search.view.ApplicantviewData;
 
 
 /**
@@ -186,6 +186,60 @@ public class Controller {
         }
         applicantList.notifyObservers();
     }
+
+
+
+    // ----- Experience utils ----
+
+    
+    /**
+     * Get list of experience description (complete specification).
+     * @param applicant applicant 
+     * @return string of detailed experience
+     */
+    public List<String> getExperienceDescriptions(final Applicant applicant) {
+        List<String> lines = new ArrayList<>();
+
+        for (Experience exp : applicant.getExperience()) {
+            String line = exp.getEntreprise()
+                + " : " + exp.getStart() + "-" + exp.getFin()
+                + " (" + exp.getDuree() + " ans)"
+                + " | " + String.join(", ", exp.getKeywords());
+            lines.add(line);
+        }
+
+        return lines;
+    }
+
+
+
+    
+    /**
+     * construction of applicants dtos.
+     * @return result dto
+     */
+   
+    public List<ApplicantviewData> getApplicantViewDataList() {
+        List<ApplicantviewData> result = new ArrayList<>();
+
+        for (Applicant a : getSelectedApplicants()) {
+            double avg = a.getAverage(getRequiredSkills());
+            int totalExp = a.getTotalExperience();
+            List<String> experts = getExpertSkills(a);
+            List<String> expLines = getExperienceDescriptions(a);
+
+            result.add(new ApplicantviewData(
+                a.getName(),
+                avg,
+                totalExp,
+                experts,
+                expLines
+            ));
+        }
+
+        return result;
+    }
+
 }
 
 

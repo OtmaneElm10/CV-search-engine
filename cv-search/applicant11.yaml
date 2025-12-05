@@ -1,0 +1,14 @@
+name: Amélie Martin
+skills:
+  java: 65
+  python: 55
+  html: 60
+
+experience:
+  StartupX:
+    start: 2023
+    end: 2024
+    keywords:
+      - java
+      - spring
+      - api

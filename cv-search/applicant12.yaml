@@ -1,0 +1,15 @@
+name: Yassine Ben
+skills:
+  python: 70
+  sql: 60
+  docker: 50
+
+experience:
+  DataLab:
+    start: 2022
+    end: 2024
+    keywords:
+      - python
+      - pandas
+      - sql
+      - data

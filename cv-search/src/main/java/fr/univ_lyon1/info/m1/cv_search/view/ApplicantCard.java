@@ -1,11 +1,10 @@
 package fr.univ_lyon1.info.m1.cv_search.view;
 
-import fr.univ_lyon1.info.m1.cv_search.model.Applicant;
+import java.util.List;
+
 import fr.univ_lyon1.info.m1.cv_search.controller.Controller;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-
-import java.util.List;
 
 /**
  * Vue représentant une carte simple pour un candidat.
@@ -14,10 +13,10 @@ public class ApplicantCard extends VBox {
 
     /**
      * Card for an applicant.
-     * @param a
-     * @param controller
+     * @param data applicant dto
+     * @param controller controller
      */
-    public ApplicantCard(final Applicant a, final Controller controller) {
+    public ApplicantCard(final ApplicantviewData data, final Controller controller) {
         setSpacing(5);
         setStyle("""
             -fx-padding: 10;
@@ -28,20 +27,19 @@ public class ApplicantCard extends VBox {
             -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 1);
             """);
 
-        // --- Nom du candidat ---
-        Label nameLabel = new Label(a.getName());
+        // Name of the applicant
+        Label nameLabel = new Label(data.getName());
         nameLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
 
-        // --- Moyenne des skills sélectionnées ---
-        double avg = a.getAverage(controller.getRequiredSkills());
+        // Avg of selected skills
         Label avgLabel = new Label(
-            "Moyenne des skills sélectionnées : " + String.format("%.2f", avg));
+            "Moyenne des skills sélectionnées : " + String.format("%.2f", data.getAverage()));
 
-        // --- Expérience totale ---
-        Label expLabel = new Label("Expérience totale : " + a.getTotalExperience() + " ans");
+        // total experience
+        Label expLabel = new Label("Expérience totale : " + data.getTotalExperience() + " ans");
 
-        // --- Skills experts ---
-        List<String> expertSkills = controller.getExpertSkills(a);
+        // skills where the applicant is considered expert
+        List<String> expertSkills = data.getExpertSkills();
         if (!expertSkills.isEmpty()) {
             Label expertLabel = new Label("Expert en : " + String.join(", ", expertSkills));
             getChildren().addAll(nameLabel, avgLabel, expLabel, expertLabel);
