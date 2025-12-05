@@ -7,10 +7,14 @@ import fr.univ_lyon1.info.m1.cv_search.model.ApplicantList;
 import fr.univ_lyon1.info.m1.cv_search.model.Experience;
 import fr.univ_lyon1.info.m1.cv_search.model.Observer;
 import fr.univ_lyon1.info.m1.cv_search.model.SelectionStrategy;
-import fr.univ_lyon1.info.m1.cv_search.model.SortByExperienceDesc;
+
 import fr.univ_lyon1.info.m1.cv_search.model.SortStrategy;
 import fr.univ_lyon1.info.m1.cv_search.model.StrategyFactory;
 import fr.univ_lyon1.info.m1.cv_search.model.StrategyType;
+
+import fr.univ_lyon1.info.m1.cv_search.model.SortStrategyFactory;
+import fr.univ_lyon1.info.m1.cv_search.model.SortType;
+
 import fr.univ_lyon1.info.m1.cv_search.view.ApplicantviewData;
 
 
@@ -171,20 +175,18 @@ public class Controller {
     }
 
 
-
-    
     /**
      * Apply sort strategy.
      * @param shortType sort strategy
-
      */
-    public void applySortStrategy(final String shortType) {
-        if ("Années d'expérience (décroissant)".equals(shortType)) {
-            this.sortStrategy = new SortByExperienceDesc();
-        } else {
-            this.sortStrategy = null;
-        }
+
+    public void applySortStrategy(final String sortLabel) {
+
+        SortType type = SortType.fromLabel(sortLabel);
+        this.sortStrategy = SortStrategyFactory.createSortStrategy(type);
+
         applicantList.notifyObservers();
+
     }
 
 

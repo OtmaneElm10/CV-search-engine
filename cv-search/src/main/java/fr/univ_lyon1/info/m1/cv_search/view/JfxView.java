@@ -7,6 +7,7 @@ import java.util.List;
 import fr.univ_lyon1.info.m1.cv_search.controller.Controller;
 import fr.univ_lyon1.info.m1.cv_search.model.Observer;
 import fr.univ_lyon1.info.m1.cv_search.model.StrategyType;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
