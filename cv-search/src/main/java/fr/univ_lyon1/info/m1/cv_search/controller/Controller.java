@@ -11,6 +11,7 @@ import fr.univ_lyon1.info.m1.cv_search.model.SortByExperienceDesc;
 import fr.univ_lyon1.info.m1.cv_search.model.SortStrategy;
 import fr.univ_lyon1.info.m1.cv_search.model.StrategyFactory;
 import fr.univ_lyon1.info.m1.cv_search.model.StrategyType;
+import fr.univ_lyon1.info.m1.cv_search.view.ApplicantviewData;
 
 
 /**
@@ -208,6 +209,35 @@ public class Controller {
         }
 
         return lines;
+    }
+
+
+
+    
+    /**
+     * construction of applicant dto.
+     * @return result dto
+     */
+   
+    public List<ApplicantviewData> getApplicantViewDataList() {
+        List<ApplicantviewData> result = new ArrayList<>();
+
+        for (Applicant a : getSelectedApplicants()) {
+            double avg = a.getAverage(getRequiredSkills());
+            int totalExp = a.getTotalExperience();
+            List<String> experts = getExpertSkills(a);
+            List<String> expLines = getExperienceDescriptions(a);
+
+            result.add(new ApplicantviewData(
+                a.getName(),
+                avg,
+                totalExp,
+                experts,
+                expLines
+            ));
+        }
+
+        return result;
     }
 
 }

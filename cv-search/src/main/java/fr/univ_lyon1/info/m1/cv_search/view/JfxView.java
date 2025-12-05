@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.univ_lyon1.info.m1.cv_search.controller.Controller;
-import fr.univ_lyon1.info.m1.cv_search.model.Applicant;
 import fr.univ_lyon1.info.m1.cv_search.model.Observer;
 import fr.univ_lyon1.info.m1.cv_search.model.SelectionStrategy;
 import fr.univ_lyon1.info.m1.cv_search.model.StrategyType;
@@ -321,14 +320,15 @@ public class JfxView implements Observer {
 
         // Décorateurs choisis selon les options d’affichage
         List<CardDecorator> decorators = buildActiveDecorators();
+        List<ApplicantviewData> viewDataList = controller.getApplicantViewDataList();
 
-        for (Applicant a : controller.getSelectedApplicants()) {
+        for (ApplicantviewData a : viewDataList) {
             // Carte de base
             ApplicantCard card = new ApplicantCard(a, controller);
 
             // Application des décorateurs actifs
             for (CardDecorator decorator : decorators) {
-                decorator.decorate(card, a, controller);
+                decorator.decorate(card, a);
             }
 
             resultBox.getChildren().add(card);
