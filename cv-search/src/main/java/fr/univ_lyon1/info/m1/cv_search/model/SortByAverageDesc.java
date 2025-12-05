@@ -1,11 +1,10 @@
 package fr.univ_lyon1.info.m1.cv_search.model;
 
-import java.util.Comparator;
 import java.util.List;
 
 
 /**
- * Strategy to sort by their average score on selected skills
+ * Strategy to sort by their average score on selected skills.
  */
 
 public class SortByAverageDesc implements SortStrategy {
@@ -13,8 +12,8 @@ public class SortByAverageDesc implements SortStrategy {
     private final List<String> skills;
 
     /**
-     * Constructor
-     * @param skill is the skills needed to calculate the average of their selected skills
+     * Constructor.
+     * @param skills is the skills needed to calculate the average of their selected skills
      */
     public SortByAverageDesc(final List<String> skills) {
         this.skills = skills;
