@@ -7,6 +7,7 @@ import fr.univ_lyon1.info.m1.cv_search.model.ApplicantList;
 import fr.univ_lyon1.info.m1.cv_search.model.Experience;
 import fr.univ_lyon1.info.m1.cv_search.model.Observer;
 import fr.univ_lyon1.info.m1.cv_search.model.SelectionStrategy;
+import fr.univ_lyon1.info.m1.cv_search.model.SortByAverageDesc;
 
 import fr.univ_lyon1.info.m1.cv_search.model.SortStrategy;
 import fr.univ_lyon1.info.m1.cv_search.model.StrategyFactory;
@@ -146,10 +147,13 @@ public class Controller {
 
     public List<Applicant> getSelectedApplicants() {
         List<Applicant> selected = applicantList.getSelectedapplicants(strategy, requiredskills);
+
         if (sortStrategy != null) {
             return sortStrategy.sort(selected);
         }
-        return selected;
+
+        SortStrategy defaultSort = new SortByAverageDesc(requiredskills);
+        return defaultSort.sort(selected);
     }
 
 

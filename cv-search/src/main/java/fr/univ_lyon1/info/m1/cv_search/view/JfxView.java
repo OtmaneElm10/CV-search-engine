@@ -217,7 +217,7 @@ public class JfxView implements Observer {
         Label label = new Label("Tri : ");
 
         ComboBox<String> sortCombo = new ComboBox<>();
-        sortCombo.getItems().add("Aucun tri"); // valeur par défaut
+        sortCombo.getItems().add("Default"); // valeur par défaut
         sortCombo.getItems().add("Années d'expérience (décroissant)");
 
         sortCombo.setValue("Aucun tri");  // valeur affichée au démarrage

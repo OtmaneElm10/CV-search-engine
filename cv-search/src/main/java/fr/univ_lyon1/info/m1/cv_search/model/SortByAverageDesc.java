@@ -22,7 +22,7 @@ public class SortByAverageDesc implements SortStrategy {
 
 
     @Override
-    public void applySortStrategy(final String sortLabel) {
+    public List<Applicant> sort(final List<Applicant> applicants) {
         return applicants.stream()
                 .sorted((a1, a2) -> Double.compare(
                         a2.getAverage(skills),
@@ -30,5 +30,5 @@ public class SortByAverageDesc implements SortStrategy {
                 )
                 .toList();
     }
-    }
+
 }
