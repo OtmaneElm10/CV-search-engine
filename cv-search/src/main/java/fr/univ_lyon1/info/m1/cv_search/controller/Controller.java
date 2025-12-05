@@ -150,7 +150,7 @@ public class Controller {
      * set the short strategy.
      * @param sortStrategy is the short strategy selected
      */
-    public void setSortStrategy(SortStrategy sortStrategy) {
+    public void setSortStrategy(final SortStrategy sortStrategy) {
         this.sortStrategy = sortStrategy;
         applicantList.notifyObservers();
     }
@@ -159,7 +159,7 @@ public class Controller {
      * Register a view to observe the model.
      * @param view is the view to register
      */
-    public void registerView(Observer view) {
+    public void registerView(final Observer view) {
         applicantList.addObserver(view);
     }
 

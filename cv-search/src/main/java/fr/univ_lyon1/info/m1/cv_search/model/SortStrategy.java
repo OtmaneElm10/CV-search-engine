@@ -8,7 +8,7 @@ import java.util.List;
 public interface SortStrategy {
 
     /**
-     * Short the applicant list
+     * Short the applicant list.
      * @param applicants list obtained by strategy
      * @return this applicant list shorted
      */
