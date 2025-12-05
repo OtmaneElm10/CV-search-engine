@@ -1,26 +1,24 @@
 package fr.univ_lyon1.info.m1.cv_search.view;
 
 
-import fr.univ_lyon1.info.m1.cv_search.model.Applicant;
-import fr.univ_lyon1.info.m1.cv_search.model.SelectionStrategy;
-import fr.univ_lyon1.info.m1.cv_search.model.Observer;
-
-import java.util.List;
-
 import fr.univ_lyon1.info.m1.cv_search.controller.Controller;
+import fr.univ_lyon1.info.m1.cv_search.model.Observer;
+import fr.univ_lyon1.info.m1.cv_search.model.SelectionStrategy;
+import fr.univ_lyon1.info.m1.cv_search.model.StrategyType;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.geometry.Pos;
-import fr.univ_lyon1.info.m1.cv_search.model.StrategyType;
 
 
 /**
@@ -44,10 +42,10 @@ public class JfxView implements Observer {
      * @param stage  the application stage
      * @param width  the window width
      * @param height the window height
-     * @param model link to the model
      * @param controller link to the controller
      */
-    public JfxView(final Stage stage, final int width, final int height, final Controller controller) {
+    public JfxView(final Stage stage, final int width,
+         final int height, final Controller controller) {
 
         this.controller = controller;
         controller.registerView(this);
@@ -55,24 +53,44 @@ public class JfxView implements Observer {
         stage.setTitle("Search for CV");
 
         VBox root = new VBox();
+        root.setSpacing(10);
+        root.setStyle("-fx-padding: 10;");
 
-        Node newSkillBox = createNewSkillWidget();
-        root.getChildren().add(newSkillBox);
+        
+        //strategy, new skill
+        HBox topSection = new HBox(10);
 
-        Node searchSkillsBox = createCurrentSearchSkillsWidget();
-        root.getChildren().add(searchSkillsBox);
-
-        Node search = createSearchWidget();
-        root.getChildren().add(search);
-
-        Node resultBox = createResultsWidget();
-        root.getChildren().add(resultBox);
 
         Node strategyWidget = strategyChoiceStrategyWidget();
-        root.getChildren().add(strategyWidget);
+        Node newSkillBox = createNewSkillWidget();
 
+        topSection.getChildren().addAll(strategyWidget, newSkillBox);
+        root.getChildren().add(topSection);
+
+
+        
+        //search ,sort, skills
+        HBox middleSection = new HBox(20);
+        middleSection.setStyle("-fx-padding: 10 0 10 0;");
+        middleSection.setAlignment(Pos.CENTER_LEFT);
+
+        Node searchSkillsBox = createCurrentSearchSkillsWidget();
         Node sortWidget = createSortWidget();
-        root.getChildren().add(sortWidget);
+
+        HBox.setHgrow(searchSkillsBox, Priority.ALWAYS);
+        
+        middleSection.getChildren().addAll(searchSkillsBox, sortWidget);
+        root.getChildren().add(middleSection);
+
+        
+        
+        //results
+        Node resultsContent = createResultsWidget();
+        ScrollPane scrollPane = new ScrollPane(resultsContent);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setPrefHeight(400);
+        root.getChildren().add(scrollPane);
+
 
 
         Scene scene = new Scene(root, width, height);
@@ -110,14 +128,7 @@ public class JfxView implements Observer {
             this.strategy = strategy;
         }
 
-        /**
-         * Get the strategy associated with this item.
-         *
-         * @return the selection strategy
-         */
-        public SelectionStrategy getStrategy() { //elle va sauter de la vue
-            return strategy;
-        }
+        
 
         /**
          * Display text in the ComboBox.
@@ -169,20 +180,11 @@ public class JfxView implements Observer {
      * @return the widget node
      */
     private Node createResultsWidget() {
-        resultBox = new VBox();
+        resultBox = new VBox(10);
+        resultBox.setStyle("-fx-padding: 10;");
         return resultBox;
     }
 
-    /**
-     * Create the search button and define its behavior.
-     *
-     * @return the search button
-     */
-    private Node createSearchWidget() {
-        Button search = new Button("Search");
-        search.setOnAction(event -> controller.search());
-        return search;
-    }
 
     /**
      * Create the widget showing the list of skills currently searched for.
@@ -191,6 +193,8 @@ public class JfxView implements Observer {
      */
     private Node createCurrentSearchSkillsWidget() {
         searchSkillsBox = new HBox();
+        searchSkillsBox.setSpacing(10);
+        searchSkillsBox.setAlignment(Pos.CENTER_LEFT);
         return searchSkillsBox;
     }
 
@@ -243,31 +247,26 @@ public class JfxView implements Observer {
         box.setSpacing(10);
         return box;
     }
+    
 
 
-
-    //  ----Refresh functions, every function -> 1 responsability ----
+//  ----Refresh functions, every function -> 1 responsability ----
 
     /**
      * Refresh the results with candidates who satisfy the requirements.
      */
+
     private void refreshResults() {
         resultBox.getChildren().clear();
-        for (Applicant a : controller.getSelectedApplicants()) {
-            String text = a.getName()
-                    + " - Moyenne skills sélectionnées : "
-                    + String.format("%.2f", a.getAverage(controller.getRequiredSkills()))
-                    + " | Expérience totale : " + a.getTotalExperience() + " ans";
+        resultBox.setSpacing(10);
+        resultBox.setStyle("-fx-padding: 10;");
 
-
-            List<String> expertSkills = controller.getExpertSkills(a);
-            if (!expertSkills.isEmpty()) {
-                text += " (expert en " + String.join(", ", expertSkills) + ")";
-            }
-
-            resultBox.getChildren().add(new Label(text));
+        for (var a : controller.getSelectedApplicants()) {
+            ApplicantCard card = new ApplicantCard(a, controller);
+            resultBox.getChildren().add(card);
         }
     }
+    
 
     /**
      * Refresh strategy in the model.
