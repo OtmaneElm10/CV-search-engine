@@ -1,17 +1,16 @@
 package fr.univ_lyon1.info.m1.cv_search.controller;
-import fr.univ_lyon1.info.m1.cv_search.model.Applicant;
-import fr.univ_lyon1.info.m1.cv_search.model.ApplicantList;
-import fr.univ_lyon1.info.m1.cv_search.model.SelectionStrategy;
-import fr.univ_lyon1.info.m1.cv_search.model.StrategyFactory;
-import fr.univ_lyon1.info.m1.cv_search.model.StrategyType;
-import fr.univ_lyon1.info.m1.cv_search.model.SortStrategy;
-import fr.univ_lyon1.info.m1.cv_search.model.SortByExperienceDesc;
-import fr.univ_lyon1.info.m1.cv_search.model.Observer;
-
-
-
 import java.util.ArrayList;
 import java.util.List;
+
+import fr.univ_lyon1.info.m1.cv_search.model.Applicant;
+import fr.univ_lyon1.info.m1.cv_search.model.ApplicantList;
+import fr.univ_lyon1.info.m1.cv_search.model.Experience;
+import fr.univ_lyon1.info.m1.cv_search.model.Observer;
+import fr.univ_lyon1.info.m1.cv_search.model.SelectionStrategy;
+import fr.univ_lyon1.info.m1.cv_search.model.SortByExperienceDesc;
+import fr.univ_lyon1.info.m1.cv_search.model.SortStrategy;
+import fr.univ_lyon1.info.m1.cv_search.model.StrategyFactory;
+import fr.univ_lyon1.info.m1.cv_search.model.StrategyType;
 
 
 /**
@@ -184,6 +183,31 @@ public class Controller {
         }
         applicantList.notifyObservers();
     }
+
+
+
+    // ----- Experience utils ----
+
+    
+    /**
+     * Get list of experience description (complete specification).
+     * @param applicant applicant 
+     * @return string of detailed experience
+     */
+    public List<String> getExperienceDescriptions(final Applicant applicant) {
+        List<String> lines = new ArrayList<>();
+
+        for (Experience exp : applicant.getExperience()) {
+            String line = exp.getEntreprise()
+                + " : " + exp.getStart() + "-" + exp.getFin()
+                + " (" + exp.getDuree() + " ans)"
+                + " | " + String.join(", ", exp.getKeywords());
+            lines.add(line);
+        }
+
+        return lines;
+    }
+
 }
 
 

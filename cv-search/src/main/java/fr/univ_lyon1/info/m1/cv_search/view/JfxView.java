@@ -1,7 +1,10 @@
 package fr.univ_lyon1.info.m1.cv_search.view;
 
 
+import java.util.List;
+
 import fr.univ_lyon1.info.m1.cv_search.controller.Controller;
+import fr.univ_lyon1.info.m1.cv_search.model.Applicant;
 import fr.univ_lyon1.info.m1.cv_search.model.Observer;
 import fr.univ_lyon1.info.m1.cv_search.model.SelectionStrategy;
 import fr.univ_lyon1.info.m1.cv_search.model.StrategyType;
@@ -261,8 +264,22 @@ public class JfxView implements Observer {
         resultBox.setSpacing(10);
         resultBox.setStyle("-fx-padding: 10;");
 
-        for (var a : controller.getSelectedApplicants()) {
+        // list of decorators
+        List<CardDecorator> decorators = List.of(
+            new ExperienceColorDecorator(),
+            new ExperienceDetailedDecorator()
+        );
+
+        for (Applicant a : controller.getSelectedApplicants()) {
+            // basic card
             ApplicantCard card = new ApplicantCard(a, controller);
+
+            // first decorator
+            for (CardDecorator decorator : decorators) {
+                decorator.decorate(card, a, controller);
+            }
+
+            // 3) on affiche la carte
             resultBox.getChildren().add(card);
         }
     }
