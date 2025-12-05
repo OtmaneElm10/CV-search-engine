@@ -134,10 +134,14 @@ public class Controller {
 
   //----Selection----
 
-    /**
-     * Get the applicant list filtred by the strategy.
-     * @return an applicant list which is strategy repected
-     */
+<<<<<<< HEAD
+
+=======
+  /**
+   * Get list of selected applicants.
+   * @return list of selected applicants
+   */  
+>>>>>>> main
     public List<Applicant> getSelectedApplicants() {
         List<Applicant> selected = applicantList.getSelectedapplicants(strategy, requiredskills);
         if (sortStrategy != null) {
@@ -146,27 +150,44 @@ public class Controller {
         return selected;
     }
 
+<<<<<<< HEAD
+
+=======
+
     /**
-     * set the short strategy.
-     * @param sortStrategy is the short strategy selected
+     * Set sort strategy.
+     * @param sortStrategy sort strategy
+>>>>>>> main
      */
     public void setSortStrategy(final SortStrategy sortStrategy) {
         this.sortStrategy = sortStrategy;
         applicantList.notifyObservers();
     }
 
+<<<<<<< HEAD
+
+=======
+
+    
     /**
-     * Register a view to observe the model.
-     * @param view is the view to register
+     * Register view.
+     * @param view current view
+>>>>>>> main
      */
     public void registerView(final Observer view) {
         applicantList.addObserver(view);
     }
 
 
+<<<<<<< HEAD
+
+=======
+
+    
     /**
-     * Apply a short strategy based on the selected name of the view.
-     * @param shortType is the name of the shot strategy
+     * Apply sort strategy.
+     * @param shortType sort strategy
+>>>>>>> main
      */
     public void applySortStrategy(final String shortType) {
         if ("Années d'expérience (décroissant)".equals(shortType)) {

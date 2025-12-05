@@ -89,8 +89,12 @@ public class Applicant {
     }
 
     /**
-     * Get the total experience duration of an applicant.
-     * @return the int which represent the total experience duration
+<<<<<<< HEAD
+
+=======
+     * Get the total experience in years.
+     * @return the total experience
+>>>>>>> main
      */
     public int getTotalExperience() {
         int total = 0;

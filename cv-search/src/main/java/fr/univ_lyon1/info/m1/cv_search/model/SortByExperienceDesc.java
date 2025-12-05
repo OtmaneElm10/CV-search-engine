@@ -3,8 +3,13 @@ package fr.univ_lyon1.info.m1.cv_search.model;
 import java.util.Comparator;
 import java.util.List;
 
+<<<<<<< HEAD
+
+=======
+
 /**
- * Strategy implementation to short an applicant list.
+ * Strategy for sorting applicants by experience in descending order.
+>>>>>>> main
  */
 public class SortByExperienceDesc implements SortStrategy {
 
