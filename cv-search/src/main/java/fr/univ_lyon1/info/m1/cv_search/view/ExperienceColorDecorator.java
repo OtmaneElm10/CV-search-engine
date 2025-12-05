@@ -1,7 +1,5 @@
 package fr.univ_lyon1.info.m1.cv_search.view;
 
-import fr.univ_lyon1.info.m1.cv_search.controller.Controller;
-import fr.univ_lyon1.info.m1.cv_search.model.Applicant;
 
 
 /**
@@ -10,16 +8,15 @@ import fr.univ_lyon1.info.m1.cv_search.model.Applicant;
 public class ExperienceColorDecorator implements CardDecorator {
 
     @Override
-    public void decorate(final ApplicantCard card, final Applicant applicant,
-         final Controller controller) {
-        int years = applicant.getTotalExperience();
+    public void decorate(final ApplicantCard card, final ApplicantviewData a) {
+        int years = a.getTotalExperience();
         String extraStyle;
 
         if (years >= 10) { // we choose a if/else because to know if an applicant is senior,
             // intermediate or junior, we can simply consider a applicant senior
             //  when he has more than 10 years of experience, and below 5 years of experience
             //he is junior, and between the two is intermediate --> only 3 cases possibles
-            
+
             extraStyle = "-fx-background-color: #d4edda;"; // senior
         } else if (years >= 5) {
             extraStyle = "-fx-background-color: #fff3cd;"; // intermediate
