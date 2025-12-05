@@ -85,6 +85,10 @@ public class Applicant {
         experience.add(exp);
     }
 
+    /**
+     * Get the total experience in years.
+     * @return the total experience
+     */
     public int getTotalExperience() {
         int total = 0;
         for (Experience exp : experience) {
