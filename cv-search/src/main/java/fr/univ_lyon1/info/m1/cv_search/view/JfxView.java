@@ -1,12 +1,9 @@
 package fr.univ_lyon1.info.m1.cv_search.view;
 
 
-
 import fr.univ_lyon1.info.m1.cv_search.model.Applicant;
 import fr.univ_lyon1.info.m1.cv_search.model.SelectionStrategy;
 import fr.univ_lyon1.info.m1.cv_search.model.Observer;
-import fr.univ_lyon1.info.m1.cv_search.model.SortByExperienceDesc;
-
 
 import java.util.List;
 
@@ -239,14 +236,7 @@ public class JfxView implements Observer {
 
         sortCombo.setOnAction(event -> {
             String choice = sortCombo.getValue();
-
-            if (choice.equals("Années d'expérience (décroissant)")) {
-                controller.setSortStrategy(new SortByExperienceDesc());
-            } else {
-                controller.setSortStrategy(null);
-            }
-
-            controller.search();
+            controller.applySortStrategy(choice);
         });
 
         HBox box = new HBox(label, sortCombo);
