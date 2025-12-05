@@ -177,7 +177,7 @@ public class Controller {
 
     /**
      * Apply sort strategy.
-     * @param shortLabel sort strategy
+     * @param sortLabel sort strategy
      */
 
     public void applySortStrategy(final String sortLabel) {
