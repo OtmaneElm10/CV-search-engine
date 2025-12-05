@@ -27,10 +27,10 @@ public class App extends Application {
 
 
         //first view
-        new JfxView(stage, 600, 600, model, controller);
+        new JfxView(stage, 600, 600, controller);
 
         //second view
-        new JfxView(new Stage(), 400, 400, model, controller);
+        new JfxView(new Stage(), 400, 400, controller);
     }
 
 

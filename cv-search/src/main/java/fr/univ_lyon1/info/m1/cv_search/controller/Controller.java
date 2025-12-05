@@ -5,6 +5,8 @@ import fr.univ_lyon1.info.m1.cv_search.model.SelectionStrategy;
 import fr.univ_lyon1.info.m1.cv_search.model.StrategyFactory;
 import fr.univ_lyon1.info.m1.cv_search.model.StrategyType;
 import fr.univ_lyon1.info.m1.cv_search.model.SortStrategy;
+import fr.univ_lyon1.info.m1.cv_search.model.Observer;
+
 
 
 import java.util.ArrayList;
@@ -148,6 +150,9 @@ public class Controller {
     }
 
 
+    public void registerView(Observer view) {
+        applicantList.addObserver(view);
+    }
 
 
 }
