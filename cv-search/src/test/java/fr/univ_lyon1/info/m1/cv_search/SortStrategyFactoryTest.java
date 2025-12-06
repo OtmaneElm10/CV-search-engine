@@ -11,6 +11,8 @@ import static org.hamcrest.Matchers.*;
 
 public class SortStrategyFactoryTest {
 
+
+    //sorting by experience
     @Test
     public void testSortByExperience() {
 
@@ -45,6 +47,50 @@ public class SortStrategyFactoryTest {
         //the third one should be c
         assertThat("5",result.get(2), is(c));
         assertThat("6",result.get(2).getName(), is("Alice Durand"));
+
+
+    }
+
+    //sorting by grade
+    @Test
+    public void testSortByGradeDesc() {
+
+        ApplicantBuilder builder = new ApplicantBuilder("applicant1.yaml");
+        Applicant a = builder.build();
+
+        ApplicantBuilder builder1 = new ApplicantBuilder("applicant2.yaml");
+        Applicant b = builder1.build();
+
+        ApplicantBuilder builder2 = new ApplicantBuilder("applicant3.yaml");
+        Applicant c = builder2.build();
+
+        List<Applicant> randomList = Arrays.asList(c,b,a);
+        List<Applicant> randomList2 = Arrays.asList(c,b,a);
+
+        // --- WHEN ---
+        // sort with Java goal ([c,b,a])
+        List<String> skill = Arrays.asList("Java");
+        SortByAverageDesc sorter = new SortByAverageDesc(skill);
+
+        //sort with c and java goal ([a,b,c])
+        //rmq c doesn't have c skill
+        List<String> skill2 = Arrays.asList("c","java");
+        SortByAverageDesc sorter2 = new SortByAverageDesc(skill2);
+
+        //Then
+        List<Applicant> result = sorter.sort(randomList);
+        assertThat("0",result, hasSize(3));
+        assertThat("1",result.get(0), is(c));
+        assertThat("2",result.get(1), is(b));
+        assertThat("3",result.get(2), is(a));
+
+        List<Applicant> result2 = sorter2.sort(randomList2);
+        assertThat("4",result2, hasSize(3));
+        assertThat("5",result2.get(0), is(a));
+        assertThat("6",result2.get(1), is(b));
+        assertThat("7",result2.get(2), is(c));
+
+
 
 
     }
