@@ -92,7 +92,7 @@ public class SelectionStrategiesTest {
     }
 
 
-    //Test all above X
+    //Test all above X (exeption included)
 
     @Test
     public void testAllAboveThreshold_Calculation(){
@@ -108,6 +108,13 @@ public class SelectionStrategiesTest {
         assertThat("3",strategy70.isSelected(a, Arrays.asList("c")), is(true));
         assertThat("4",strategy70.isSelected(a, Arrays.asList("c++","c")), is(true));
         assertThat("5",strategy70.isSelected(a, Arrays.asList("c","c++","java")), is(false));
+
+        AllAboveThresholdStrategy strategy0 = new AllAboveThresholdStrategy(0);
+        assertThat("6",strategy0.isSelected(a, Arrays.asList("c","c++","java")), is(true));
+        assertThat("7",strategy0.isSelected(a, Arrays.asList()), is(true));
+
+        AllAboveThresholdStrategy strategy10 = new AllAboveThresholdStrategy(10);
+        assertThat("8",strategy10.isSelected(a, Arrays.asList()), is(true));
 
 
 
