@@ -1,9 +1,6 @@
 package fr.univ_lyon1.info.m1.cv_search;
 
-import fr.univ_lyon1.info.m1.cv_search.model.Applicant;
-import fr.univ_lyon1.info.m1.cv_search.model.ApplicantBuilder;
-import fr.univ_lyon1.info.m1.cv_search.model.AverageAboveThresholdStrategy;
-import fr.univ_lyon1.info.m1.cv_search.model.ExpertInAnyStrategy;
+import fr.univ_lyon1.info.m1.cv_search.model.*;
 import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
@@ -59,7 +56,7 @@ public class SelectionStrategiesTest {
 
 
 
-    // Test average above
+    // Test average above X
 
     @Test
     public void testAverageAboveThreshold_Calculation(){
@@ -95,7 +92,28 @@ public class SelectionStrategiesTest {
     }
 
 
+    //Test all above X
 
+    @Test
+    public void testAllAboveThreshold_Calculation(){
+        ApplicantBuilder builder = new ApplicantBuilder("applicant1.yaml");
+        Applicant a = builder.build();
+
+        AllAboveThresholdStrategy strategy40 = new AllAboveThresholdStrategy(40);
+
+        assertThat("1",strategy40.isSelected(a, Arrays.asList("java")), is(true));
+        assertThat("2",strategy40.isSelected(a, Arrays.asList("python")), is(false));
+
+        AllAboveThresholdStrategy strategy70 = new AllAboveThresholdStrategy(70);
+        assertThat("3",strategy70.isSelected(a, Arrays.asList("c")), is(true));
+        assertThat("4",strategy70.isSelected(a, Arrays.asList("c++","c")), is(true));
+        assertThat("5",strategy70.isSelected(a, Arrays.asList("c","c++","java")), is(false));
+
+
+
+
+
+    }
 
 
 
