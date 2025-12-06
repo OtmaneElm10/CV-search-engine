@@ -2,6 +2,7 @@ package fr.univ_lyon1.info.m1.cv_search;
 
 import fr.univ_lyon1.info.m1.cv_search.model.Applicant;
 import fr.univ_lyon1.info.m1.cv_search.model.ApplicantBuilder;
+import fr.univ_lyon1.info.m1.cv_search.model.AverageAboveThresholdStrategy;
 import fr.univ_lyon1.info.m1.cv_search.model.ExpertInAnyStrategy;
 import org.junit.jupiter.api.Test;
 import java.util.Arrays;
@@ -55,4 +56,48 @@ public class SelectionStrategiesTest {
         ExpertInAnyStrategy strategy = new ExpertInAnyStrategy(55);
         assertThat(strategy.getLabel(), is("EXPERT >= 55"));
     }
+
+
+
+    // Test average above
+
+    @Test
+    public void testAverageAboveThreshold_Calculation(){
+
+        //Given
+        ApplicantBuilder builder = new ApplicantBuilder("applicant1.yaml");
+        Applicant a = builder.build();
+
+        //When and Then
+
+        AverageAboveThresholdStrategy strategyLow = new AverageAboveThresholdStrategy(40);
+        assertThat("Moyenne au dessus de 40",
+                strategyLow.isSelected(a, Arrays.asList("c")), is(true));
+
+        AverageAboveThresholdStrategy strategytooHigh = new AverageAboveThresholdStrategy(100);
+        assertThat("Moyenne au dessus de 100 (impossible)",strategytooHigh.isSelected(a, Arrays.asList("c")), is(false));
+        assertThat(strategytooHigh.isSelected(a, Arrays.asList("c","c++","java")), is(false));
+
+        AverageAboveThresholdStrategy strategymidhigh = new AverageAboveThresholdStrategy(80);
+        assertThat("Moyenne au dessus de 80",strategymidhigh.isSelected(a, Arrays.asList("java","c++")), is(false));
+        assertThat(strategymidhigh.isSelected(a, Arrays.asList("c")), is(true));
+
+        AverageAboveThresholdStrategy strategynull = new AverageAboveThresholdStrategy(0);
+        assertThat("Moyenne au dessus de 0",strategymidhigh.isSelected(a, Arrays.asList()), is(false));
+        assertThat(strategymidhigh.isSelected(a, Arrays.asList("c")), is(true));
+
+        AverageAboveThresholdStrategy strategyexact = new AverageAboveThresholdStrategy(90);
+        assertThat("Moyenne exact",strategymidhigh.isSelected(a, Arrays.asList("c")), is(true));
+
+
+
+
+    }
+
+
+
+
+
+
+
 }
