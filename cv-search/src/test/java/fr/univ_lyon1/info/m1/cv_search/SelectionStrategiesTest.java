@@ -3,18 +3,21 @@ package fr.univ_lyon1.info.m1.cv_search;
 import fr.univ_lyon1.info.m1.cv_search.model.*;
 import org.junit.jupiter.api.Test;
 import java.util.Arrays;
-import java.util.List;
+
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.CoreMatchers.is;
 
-
+/**
+ * Tests class for the selection strategies.
+ */
 public class SelectionStrategiesTest {
 
-    // Test of Expert in any strategy
-
+    /**
+     * Test of Expert in any strategy.
+     */
     @Test
-    public void testExpertInAny_IsSelected () {
+    public void testExpertInAnyIsSelected () {
 
         //Given
         ApplicantBuilder builder = new ApplicantBuilder("applicant1.yaml");
@@ -48,18 +51,21 @@ public class SelectionStrategiesTest {
 
     }
 
+    /**
+     * Getter to test the get label.
+     */
     @Test
-    public void testExpertInAny_Label() {
+    public void testExpertInAnyLabel() {
         ExpertInAnyStrategy strategy = new ExpertInAnyStrategy(55);
         assertThat(strategy.getLabel(), is("EXPERT >= 55"));
     }
 
 
-
-    // Test average above X
-
+    /**
+     * Tests of average above X.
+     */
     @Test
-    public void testAverageAboveThreshold_Calculation(){
+    public void testAverageAboveThresholdCalculation(){
 
         //Given
         ApplicantBuilder builder = new ApplicantBuilder("applicant1.yaml");
@@ -72,15 +78,18 @@ public class SelectionStrategiesTest {
                 strategyLow.isSelected(a, Arrays.asList("c")), is(true));
 
         AverageAboveThresholdStrategy strategytooHigh = new AverageAboveThresholdStrategy(100);
-        assertThat("Moyenne au dessus de 100 (impossible)",strategytooHigh.isSelected(a, Arrays.asList("c")), is(false));
-        assertThat(strategytooHigh.isSelected(a, Arrays.asList("c","c++","java")), is(false));
+        assertThat("Moyenne au dessus de 100(impossible)",strategytooHigh.isSelected(a, Arrays.asList("c")),
+                is(false));
+        assertThat(strategytooHigh.isSelected(a, Arrays.asList("c", "c++", "java")), is(false));
 
         AverageAboveThresholdStrategy strategymidhigh = new AverageAboveThresholdStrategy(80);
-        assertThat("Moyenne au dessus de 80",strategymidhigh.isSelected(a, Arrays.asList("java","c++")), is(false));
+        assertThat("Moyenne au dessus de 80",strategymidhigh.isSelected(a, Arrays.asList("java", "c++")),
+                is(false));
         assertThat(strategymidhigh.isSelected(a, Arrays.asList("c")), is(true));
 
         AverageAboveThresholdStrategy strategynull = new AverageAboveThresholdStrategy(0);
-        assertThat("Moyenne au dessus de 0",strategymidhigh.isSelected(a, Arrays.asList()), is(false));
+        assertThat("Moyenne au dessus de 0",strategymidhigh.isSelected(a, Arrays.asList()),
+                is(false));
         assertThat(strategymidhigh.isSelected(a, Arrays.asList("c")), is(true));
 
         AverageAboveThresholdStrategy strategyexact = new AverageAboveThresholdStrategy(90);
@@ -92,10 +101,11 @@ public class SelectionStrategiesTest {
     }
 
 
-    //Test all above X (exeption included)
-
+    /**
+     * Tests for all above X and exception included.
+     */
     @Test
-    public void testAllAboveThreshold_Calculation(){
+    public void testAllAboveThresholdCalculation(){
         ApplicantBuilder builder = new ApplicantBuilder("applicant1.yaml");
         Applicant a = builder.build();
 

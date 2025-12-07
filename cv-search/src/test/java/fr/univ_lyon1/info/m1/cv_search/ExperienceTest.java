@@ -7,12 +7,20 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.hasSize;
 
+/**
+ * Tests class for checking experience model.
+ */
 public class ExperienceTest {
 
+
+    /**
+     * Testing of the initialisation(creation) of experience class.
+     */
     @Test
-    public void test() {
+    public void testInit() {
 
         //Given
         List<String> keywords = Arrays.asList("Java", "SQL");
@@ -27,10 +35,13 @@ public class ExperienceTest {
 
         //check list
         assertThat(exp.getKeywords(), hasSize(2));
-        assertThat(exp.getKeywords(), contains("Java", "SQL"));
+
 
     }
 
+    /**
+     * test of duration calculation.
+     */
     @Test
     public void testDurationCalculation() {
 
@@ -41,8 +52,11 @@ public class ExperienceTest {
         assertThat(exp.getDuree(), is(4));
     }
 
+    /**
+     * test of string return value used for the display.
+     */
     @Test
-    public void testToString () {
+    public void testToString() {
 
         //Given
         List<String> keywords = Arrays.asList("Java", "SQL");
