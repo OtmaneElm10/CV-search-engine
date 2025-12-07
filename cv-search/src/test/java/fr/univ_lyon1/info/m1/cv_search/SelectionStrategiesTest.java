@@ -1,5 +1,6 @@
 package fr.univ_lyon1.info.m1.cv_search;
 
+
 import fr.univ_lyon1.info.m1.cv_search.model.*;
 import org.junit.jupiter.api.Test;
 import java.util.Arrays;
@@ -17,7 +18,7 @@ public class SelectionStrategiesTest {
      * Test of Expert in any strategy.
      */
     @Test
-    public void testExpertInAnyIsSelected () {
+    public void testExpertInAnyIsSelected() {
 
         //Given
         ApplicantBuilder builder = new ApplicantBuilder("applicant1.yaml");
@@ -65,7 +66,7 @@ public class SelectionStrategiesTest {
      * Tests of average above X.
      */
     @Test
-    public void testAverageAboveThresholdCalculation(){
+    public void testAverageAboveThresholdCalculation() {
 
         //Given
         ApplicantBuilder builder = new ApplicantBuilder("applicant1.yaml");
@@ -78,22 +79,23 @@ public class SelectionStrategiesTest {
                 strategyLow.isSelected(a, Arrays.asList("c")), is(true));
 
         AverageAboveThresholdStrategy strategytooHigh = new AverageAboveThresholdStrategy(100);
-        assertThat("Moyenne au dessus de 100(impossible)",strategytooHigh.isSelected(a, Arrays.asList("c")),
+        assertThat("Moyenne au dessus de 100(impossible)", strategytooHigh.isSelected(a, Arrays.asList("c")),
                 is(false));
         assertThat(strategytooHigh.isSelected(a, Arrays.asList("c", "c++", "java")), is(false));
 
         AverageAboveThresholdStrategy strategymidhigh = new AverageAboveThresholdStrategy(80);
-        assertThat("Moyenne au dessus de 80",strategymidhigh.isSelected(a, Arrays.asList("java", "c++")),
-                is(false));
+        assertThat("Moyenne au dessus de 80",
+                strategymidhigh.isSelected(a, Arrays.asList("java", "c++")), is(false));
         assertThat(strategymidhigh.isSelected(a, Arrays.asList("c")), is(true));
 
         AverageAboveThresholdStrategy strategynull = new AverageAboveThresholdStrategy(0);
-        assertThat("Moyenne au dessus de 0",strategymidhigh.isSelected(a, Arrays.asList()),
-                is(false));
+        assertThat("Moyenne au dessus de 0",
+                strategynull.isSelected(a, Arrays.asList()), is(false));
         assertThat(strategymidhigh.isSelected(a, Arrays.asList("c")), is(true));
 
         AverageAboveThresholdStrategy strategyexact = new AverageAboveThresholdStrategy(90);
-        assertThat("Moyenne exact",strategymidhigh.isSelected(a, Arrays.asList("c")), is(true));
+        assertThat("Moyenne exact",
+                strategyexact.isSelected(a, Arrays.asList("c")), is(true));
 
 
 
@@ -105,26 +107,26 @@ public class SelectionStrategiesTest {
      * Tests for all above X and exception included.
      */
     @Test
-    public void testAllAboveThresholdCalculation(){
+    public void testAllAboveThresholdCalculation() {
         ApplicantBuilder builder = new ApplicantBuilder("applicant1.yaml");
         Applicant a = builder.build();
 
         AllAboveThresholdStrategy strategy40 = new AllAboveThresholdStrategy(40);
 
-        assertThat("1",strategy40.isSelected(a, Arrays.asList("java")), is(true));
-        assertThat("2",strategy40.isSelected(a, Arrays.asList("python")), is(false));
+        assertThat("1", strategy40.isSelected(a, Arrays.asList("java")), is(true));
+        assertThat("2", strategy40.isSelected(a, Arrays.asList("python")), is(false));
 
         AllAboveThresholdStrategy strategy70 = new AllAboveThresholdStrategy(70);
-        assertThat("3",strategy70.isSelected(a, Arrays.asList("c")), is(true));
-        assertThat("4",strategy70.isSelected(a, Arrays.asList("c++","c")), is(true));
-        assertThat("5",strategy70.isSelected(a, Arrays.asList("c","c++","java")), is(false));
+        assertThat("3", strategy70.isSelected(a, Arrays.asList("c")), is(true));
+        assertThat("4", strategy70.isSelected(a, Arrays.asList("c++","c")), is(true));
+        assertThat("5", strategy70.isSelected(a, Arrays.asList("c","c++","java")), is(false));
 
         AllAboveThresholdStrategy strategy0 = new AllAboveThresholdStrategy(0);
-        assertThat("6",strategy0.isSelected(a, Arrays.asList("c","c++","java")), is(true));
-        assertThat("7",strategy0.isSelected(a, Arrays.asList()), is(true));
+        assertThat("6", strategy0.isSelected(a, Arrays.asList("c","c++","java")), is(true));
+        assertThat("7", strategy0.isSelected(a, Arrays.asList()), is(true));
 
         AllAboveThresholdStrategy strategy10 = new AllAboveThresholdStrategy(10);
-        assertThat("8",strategy10.isSelected(a, Arrays.asList()), is(true));
+        assertThat("8", strategy10.isSelected(a, Arrays.asList()), is(true));
 
 
 
