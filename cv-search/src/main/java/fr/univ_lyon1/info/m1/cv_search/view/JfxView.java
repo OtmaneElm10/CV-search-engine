@@ -35,6 +35,7 @@ public class JfxView implements Observer {
     private ComboBox<StrategyType> comboBox;
     private CheckBox colorExperienceCheckbox;
     private CheckBox detailExperienceCheckbox;
+    private CheckBox rareSkillsCheckbox;
 
 
 
@@ -243,6 +244,7 @@ public class JfxView implements Observer {
 
         colorExperienceCheckbox = new CheckBox("Couleur selon expérience");
         detailExperienceCheckbox = new CheckBox("Afficher détails expériences");
+        rareSkillsCheckbox = new CheckBox("Afficher perles rares");
 
         // default
         colorExperienceCheckbox.setSelected(true);
@@ -251,8 +253,11 @@ public class JfxView implements Observer {
         // update when changed
         colorExperienceCheckbox.setOnAction(e -> refreshResults());
         detailExperienceCheckbox.setOnAction(e -> refreshResults());
+        rareSkillsCheckbox.setOnAction(e -> refreshResults());
 
-        box.getChildren().addAll(label, colorExperienceCheckbox, detailExperienceCheckbox);
+        box.getChildren().addAll(
+            label, colorExperienceCheckbox, detailExperienceCheckbox, rareSkillsCheckbox
+        );
         
         return box;
     }

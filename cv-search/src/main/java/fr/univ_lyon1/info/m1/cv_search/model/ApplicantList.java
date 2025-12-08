@@ -3,8 +3,10 @@ package fr.univ_lyon1.info.m1.cv_search.model;
 import fr.univ_lyon1.info.m1.cv_search.Dao.ApplicantDao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Wrapper around {@link List<Applicant>} implementing the observer pattern.
@@ -15,6 +17,8 @@ public class ApplicantList implements Iterable<Applicant>, Observable {
     private final ApplicantDao applicantDao;
                                                        
     private List<Observer> observers = new ArrayList<Observer>();
+
+    private static final int RARE_THRESHOLD = 2;
 
     
     /**
@@ -111,6 +115,44 @@ public class ApplicantList implements Iterable<Applicant>, Observable {
         }
 
         return selected;
+    }
+
+
+    //skills rarety
+
+    
+    
+    /**
+     * Compute the frequency of each skill in the list of applicants.
+     * @return
+     */
+    public Map<String, Integer> computeSkillsFrequency() {
+        Map<String, Integer> skillsFrequency = new HashMap<>();
+        for (Applicant a : this) {
+            for (String skill : a.getSkills().keySet()) {
+                skillsFrequency.merge(skill, 1, Integer::sum);
+            }       
+        }
+
+        return skillsFrequency;
+    }
+
+
+    /**
+     * Get the list of rare skills for a given applicant.
+     * @param a the applicant
+     * @return the list of rare skills
+     */
+    public List<String> getRareSkills(final Applicant a) {
+        Map<String, Integer> freq = computeSkillsFrequency();
+        List<String> rareSkills = new ArrayList<>();
+        
+        for (String skill : a.getSkills().keySet()) {
+            if (freq.getOrDefault(skill, 0 ) < RARE_THRESHOLD) {
+                rareSkills.add(skill);
+            }
+        
+        }
     }
 
 }
