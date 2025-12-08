@@ -2,13 +2,14 @@ package fr.univ_lyon1.info.m1.cv_search.view;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import fr.univ_lyon1.info.m1.cv_search.controller.Controller;
-
 import fr.univ_lyon1.info.m1.cv_search.model.Observer;
 import fr.univ_lyon1.info.m1.cv_search.model.StrategyType;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -32,11 +33,23 @@ import javafx.stage.Stage;
 public class JfxView implements Observer {
     private HBox searchSkillsBox;
     private VBox resultBox;
+
     private ComboBox<StrategyType> comboBox;
+
     private CheckBox colorExperienceCheckbox;
     private CheckBox detailExperienceCheckbox;
+    private CheckBox rareSkillsCheckbox;
 
 
+    private Map<DisplayOption, CheckBox> optionCheckboxes = new HashMap<>();
+    private Map<DisplayOption, Supplier<CardDecorator>> optionDecorators = new HashMap<>();
+    
+    // We use a Supplier (the ::new part) to avoid creating the Decorator object immediately. 
+    // It's like having a 'recipe' to build the object later.
+    // We do this to ensure two things:
+    // 1. **Lazy Creation:** The Decorator is only built if the checkbox is actually selected.
+    // 2. **Fresh Instance:** We get a brand new Decorator every time we refresh results, 
+    //    which prevents styling bugs when dealing with multiple applicants.
 
 
     private Controller controller;
@@ -243,6 +256,7 @@ public class JfxView implements Observer {
 
         colorExperienceCheckbox = new CheckBox("Couleur selon expérience");
         detailExperienceCheckbox = new CheckBox("Afficher détails expériences");
+        rareSkillsCheckbox = new CheckBox("Afficher perles rares");
 
         // default
         colorExperienceCheckbox.setSelected(true);
@@ -251,9 +265,27 @@ public class JfxView implements Observer {
         // update when changed
         colorExperienceCheckbox.setOnAction(e -> refreshResults());
         detailExperienceCheckbox.setOnAction(e -> refreshResults());
+        rareSkillsCheckbox.setOnAction(e -> refreshResults());
 
-        box.getChildren().addAll(label, colorExperienceCheckbox, detailExperienceCheckbox);
+        box.getChildren().addAll(
+            label, colorExperienceCheckbox, detailExperienceCheckbox, rareSkillsCheckbox
+        );
         
+
+        // association option/checkbox
+        optionCheckboxes.put(DisplayOption.COLOR_EXPERIENCE, colorExperienceCheckbox);
+        optionCheckboxes.put(DisplayOption.DETAIL_EXPERIENCE, detailExperienceCheckbox);
+        optionCheckboxes.put(DisplayOption.RARE_SKILLS, rareSkillsCheckbox);
+
+        // association option/decorator
+        // when an option is selected, add the corresponding decorator
+        // we can create an instance of the decorator because in this case the decorator contains 
+        // simply elements for the view, and not logic
+        optionDecorators.put(DisplayOption.COLOR_EXPERIENCE, ExperienceColorDecorator::new);
+        optionDecorators.put(DisplayOption.DETAIL_EXPERIENCE, ExperienceDetailedDecorator::new);
+        optionDecorators.put(DisplayOption.RARE_SKILLS, RareSkillsDecorator::new);
+
+
         return box;
     }
     
@@ -268,11 +300,11 @@ public class JfxView implements Observer {
     private List<CardDecorator> buildActiveDecorators() {
         List<CardDecorator> decorators = new ArrayList<>();
 
-        if (colorExperienceCheckbox != null && colorExperienceCheckbox.isSelected()) {
-            decorators.add(new ExperienceColorDecorator());
-        }
-        if (detailExperienceCheckbox != null && detailExperienceCheckbox.isSelected()) {
-            decorators.add(new ExperienceDetailedDecorator());
+        for (DisplayOption option : optionCheckboxes.keySet()) {
+            CheckBox box = optionCheckboxes.get(option);
+            if (box.isSelected()) {
+                decorators.add(optionDecorators.get(option).get());
+            }
         }
 
         return decorators;
