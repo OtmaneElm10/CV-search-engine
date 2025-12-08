@@ -18,7 +18,8 @@ public class ApplicantList implements Iterable<Applicant>, Observable {
                                                        
     private List<Observer> observers = new ArrayList<Observer>();
 
-    private static final int RARE_THRESHOLD = 2;
+    private static final int RARE_THRESHOLD = 2; 
+    //we consider a skill rare if it is used less or equal to 2 times
 
     
     /**
@@ -148,11 +149,12 @@ public class ApplicantList implements Iterable<Applicant>, Observable {
         List<String> rareSkills = new ArrayList<>();
         
         for (String skill : a.getSkills().keySet()) {
-            if (freq.getOrDefault(skill, 0 ) < RARE_THRESHOLD) {
+            if (freq.getOrDefault(skill, 0) <= RARE_THRESHOLD) {
                 rareSkills.add(skill);
             }
-        
-        }
+        } 
+
+        return rareSkills;
     }
 
 }

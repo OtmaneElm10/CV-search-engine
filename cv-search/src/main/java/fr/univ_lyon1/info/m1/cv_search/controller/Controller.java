@@ -8,14 +8,11 @@ import fr.univ_lyon1.info.m1.cv_search.model.Experience;
 import fr.univ_lyon1.info.m1.cv_search.model.Observer;
 import fr.univ_lyon1.info.m1.cv_search.model.SelectionStrategy;
 import fr.univ_lyon1.info.m1.cv_search.model.SortByAverageDesc;
-
 import fr.univ_lyon1.info.m1.cv_search.model.SortStrategy;
-import fr.univ_lyon1.info.m1.cv_search.model.StrategyFactory;
-import fr.univ_lyon1.info.m1.cv_search.model.StrategyType;
-
 import fr.univ_lyon1.info.m1.cv_search.model.SortStrategyFactory;
 import fr.univ_lyon1.info.m1.cv_search.model.SortType;
-
+import fr.univ_lyon1.info.m1.cv_search.model.StrategyFactory;
+import fr.univ_lyon1.info.m1.cv_search.model.StrategyType;
 import fr.univ_lyon1.info.m1.cv_search.view.ApplicantviewData;
 
 
@@ -79,6 +76,16 @@ public class Controller {
      */
     public List<String> getExpertSkills(final Applicant a) {
         return strategy.getHighlightSkills(a, requiredskills);
+    }
+
+
+    /**
+     * Go through the list of applicants and return the list of rare skills.
+     * @param applicant applicant
+     * @return list of rare skills
+     */
+    public List<String> getRareSkills(final Applicant applicant) {
+        return applicantList.getRareSkills(applicant);
     }
 
 
@@ -227,17 +234,20 @@ public class Controller {
         List<ApplicantviewData> result = new ArrayList<>();
 
         for (Applicant a : getSelectedApplicants()) {
+            
             double avg = a.getAverage(getRequiredSkills());
             int totalExp = a.getTotalExperience();
             List<String> experts = getExpertSkills(a);
             List<String> expLines = getExperienceDescriptions(a);
+            List<String> rareSkills = getRareSkills(a);
 
             result.add(new ApplicantviewData(
                 a.getName(),
                 avg,
                 totalExp,
                 experts,
-                expLines
+                expLines,
+                rareSkills
             ));
         }
 
