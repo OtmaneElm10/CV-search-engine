@@ -2,13 +2,14 @@ package fr.univ_lyon1.info.m1.cv_search.view;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import fr.univ_lyon1.info.m1.cv_search.controller.Controller;
-
 import fr.univ_lyon1.info.m1.cv_search.model.Observer;
 import fr.univ_lyon1.info.m1.cv_search.model.StrategyType;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -32,12 +33,16 @@ import javafx.stage.Stage;
 public class JfxView implements Observer {
     private HBox searchSkillsBox;
     private VBox resultBox;
+
     private ComboBox<StrategyType> comboBox;
+
     private CheckBox colorExperienceCheckbox;
     private CheckBox detailExperienceCheckbox;
     private CheckBox rareSkillsCheckbox;
 
 
+    private Map<DisplayOption, CheckBox> optionCheckboxes = new HashMap<>();
+    private Map<DisplayOption, Supplier<CardDecorator>> optionDecorators = new HashMap<>();
 
 
     private Controller controller;
@@ -259,6 +264,18 @@ public class JfxView implements Observer {
             label, colorExperienceCheckbox, detailExperienceCheckbox, rareSkillsCheckbox
         );
         
+
+        // association option/checkbox
+        optionCheckboxes.put(DisplayOption.COLOR_EXPERIENCE, colorExperienceCheckbox);
+        optionCheckboxes.put(DisplayOption.DETAIL_EXPERIENCE, detailExperienceCheckbox);
+        optionCheckboxes.put(DisplayOption.RARE_SKILLS, rareSkillsCheckbox);
+
+        // association option/decorator
+        optionDecorators.put(DisplayOption.COLOR_EXPERIENCE, ExperienceColorDecorator::new);
+        optionDecorators.put(DisplayOption.DETAIL_EXPERIENCE, ExperienceDetailedDecorator::new);
+        optionDecorators.put(DisplayOption.RARE_SKILLS, RareSkillsDecorator::new);
+
+
         return box;
     }
     
@@ -273,13 +290,13 @@ public class JfxView implements Observer {
     private List<CardDecorator> buildActiveDecorators() {
         List<CardDecorator> decorators = new ArrayList<>();
 
-        if (colorExperienceCheckbox != null && colorExperienceCheckbox.isSelected()) {
-            decorators.add(new ExperienceColorDecorator());
+        for (DisplayOption option : optionCheckboxes.keySet()) {
+            CheckBox box = optionCheckboxes.get(option);
+            if (box.isSelected()) {
+                decorators.add(optionDecorators.get(option).get());
+            }
         }
-        if (detailExperienceCheckbox != null && detailExperienceCheckbox.isSelected()) {
-            decorators.add(new ExperienceDetailedDecorator());
-        }
-
+        
         return decorators;
     }
 
