@@ -43,6 +43,13 @@ public class JfxView implements Observer {
 
     private Map<DisplayOption, CheckBox> optionCheckboxes = new HashMap<>();
     private Map<DisplayOption, Supplier<CardDecorator>> optionDecorators = new HashMap<>();
+    
+    // We use a Supplier (the ::new part) to avoid creating the Decorator object immediately. 
+    // It's like having a 'recipe' to build the object later.
+    // We do this to ensure two things:
+    // 1. **Lazy Creation:** The Decorator is only built if the checkbox is actually selected.
+    // 2. **Fresh Instance:** We get a brand new Decorator every time we refresh results, 
+    //    which prevents styling bugs when dealing with multiple applicants.
 
 
     private Controller controller;
@@ -271,6 +278,9 @@ public class JfxView implements Observer {
         optionCheckboxes.put(DisplayOption.RARE_SKILLS, rareSkillsCheckbox);
 
         // association option/decorator
+        // when an option is selected, add the corresponding decorator
+        // we can create an instance of the decorator because in this case the decorator contains 
+        // simply elements for the view, and not logic
         optionDecorators.put(DisplayOption.COLOR_EXPERIENCE, ExperienceColorDecorator::new);
         optionDecorators.put(DisplayOption.DETAIL_EXPERIENCE, ExperienceDetailedDecorator::new);
         optionDecorators.put(DisplayOption.RARE_SKILLS, RareSkillsDecorator::new);
@@ -296,7 +306,7 @@ public class JfxView implements Observer {
                 decorators.add(optionDecorators.get(option).get());
             }
         }
-        
+
         return decorators;
     }
 
