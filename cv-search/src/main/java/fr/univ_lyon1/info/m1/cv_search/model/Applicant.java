@@ -1,6 +1,7 @@
 package fr.univ_lyon1.info.m1.cv_search.model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,6 +99,54 @@ public class Applicant {
             total += exp.getDuree();
         }
         return total;
+    }
+
+
+    
+    /**
+     * Get the list of red flags for the applicant.
+     * @return the list of red flags
+     */
+    public List<String> getRedFlags() {
+
+        List<String> flags = new ArrayList<>();
+        List<Experience> exps = getExperience();
+
+        if (exps == null || exps.isEmpty()) {
+            flags.add("Pas d'expérience professionnelle");
+            return flags;
+        }
+
+        // Sort the experience by start date
+        exps.sort(Comparator.comparing(Experience::getStart));
+
+        for (int i = 0; i < exps.size(); i++) {
+            
+            Experience exp = exps.get(i);
+            int duration = exp.getDuree(); 
+
+            // short experience flag
+            if (duration <= 1) {
+                flags.add("Expérience courte : " + exp.getEntreprise() 
+                      + " (" + duration + " an" + (duration > 1 ? "s" : "") + ")");
+            }
+
+        
+            if (i + 1 < exps.size()) {
+                Experience next = exps.get(i + 1);
+
+                int gap = next.getStart() - exp.getFin();
+
+                //gap in the CV
+                if (gap >= 2) {
+                    flags.add("Trou dans le CV (" 
+                          + exp.getFin() + " → " + next.getStart() + ")");
+                }
+            }
+        }
+    
+        return flags;
+
     }
 
 
