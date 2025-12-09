@@ -1,0 +1,19 @@
+name: Laura Denis
+skills:
+  python: 60
+  data: 70
+
+experience:
+  DataCorp:
+    start: 2015
+    end: 2017
+    keywords:
+      - python
+      - pandas
+
+  OpenAI France:
+    start: 2021
+    end: 2024
+    keywords:
+      - ml
+      - ai

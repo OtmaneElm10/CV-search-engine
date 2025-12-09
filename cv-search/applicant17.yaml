@@ -1,0 +1,24 @@
+name: "Abdel Hakim"
+skills:
+  java: 65
+  spring: 75
+  docker: 90
+
+experience:
+  FastTech:
+    start: 2020
+    end: 2021
+    keywords:
+      - java
+
+  QuickSolutions:
+    start: 2021
+    end: 2022
+    keywords:
+      - spring
+
+  RapidApps:
+    start: 2022
+    end: 2023
+    keywords:
+      - docker
