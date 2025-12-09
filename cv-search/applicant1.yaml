@@ -2,7 +2,7 @@ name: John Smith
 skills:
   c: 90
   c++: 70
-  JAva: 55
+  java: 55
 experience:
   Google:
     start: 2005
