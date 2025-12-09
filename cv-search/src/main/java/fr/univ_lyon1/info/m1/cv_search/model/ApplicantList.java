@@ -131,7 +131,7 @@ public class ApplicantList implements Iterable<Applicant>, Observable {
         Map<String, Integer> skillsFrequency = new HashMap<>();
         for (Applicant a : this) {
             for (String skill : a.getSkills().keySet()) {
-                skillsFrequency.merge(skill, 1, Integer::sum);
+                skillsFrequency.merge(skill.toLowerCase(), 1, Integer::sum);
             }       
         }
 
@@ -149,7 +149,7 @@ public class ApplicantList implements Iterable<Applicant>, Observable {
         List<String> rareSkills = new ArrayList<>();
         
         for (String skill : a.getSkills().keySet()) {
-            if (freq.getOrDefault(skill, 0) <= RARE_THRESHOLD) {
+            if (freq.getOrDefault(skill.toLowerCase(), 0) <= RARE_THRESHOLD) {
                 rareSkills.add(skill);
             }
         } 
