@@ -13,6 +13,7 @@ public class ApplicantviewData {
     private  List<String> expertSkills;
     private final List<String> experienceLines;
     private final List<String> rareSkills;
+    private final List<String> redFlags;
 
     /**
      * Constructor.
@@ -24,13 +25,14 @@ public class ApplicantviewData {
     public ApplicantviewData(final String name, final double average,
         final int totalExperience, 
         final List<String> expertSkills, final List<String> experienceLines,
-            final List<String> rareskills) {
+            final List<String> rareskills, final List<String> redFlags) {
         this.name = name;
         this.average = average;
         this.totalExperience = totalExperience;
         this.expertSkills = expertSkills;
         this.experienceLines = experienceLines;
         this.rareSkills = rareskills;
+        this.redFlags = redFlags;
     }
 
     public String getName() {
@@ -55,5 +57,10 @@ public class ApplicantviewData {
 
     public List<String> getRareSkills() {
         return rareSkills;
+    }
+
+
+    public List<String> getRedFlags() {
+        return redFlags;
     }
 }

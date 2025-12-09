@@ -240,6 +240,7 @@ public class Controller {
             List<String> experts = getExpertSkills(a);
             List<String> expLines = getExperienceDescriptions(a);
             List<String> rareSkills = getRareSkills(a);
+            List<String> redFlags = a.getRedFlags();
 
             result.add(new ApplicantviewData(
                 a.getName(),
@@ -247,7 +248,8 @@ public class Controller {
                 totalExp,
                 experts,
                 expLines,
-                rareSkills
+                rareSkills,
+                redFlags
             ));
         }
 
