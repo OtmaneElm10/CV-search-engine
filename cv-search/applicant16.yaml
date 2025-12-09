@@ -1,0 +1,24 @@
+name: Thomas Leroy
+skills:
+  security: 40
+  linux: 30
+
+experience:
+  SecuriTeam:
+    start: 2016
+    end: 2017
+    keywords:
+      - linux
+      - pentest
+
+  QuickDef:
+    start: 2019
+    end: 2020
+    keywords:
+      - soc
+
+  TrustGuard:
+    start: 2020
+    end: 2021
+    keywords:
+      - devsecops

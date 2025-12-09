@@ -1,0 +1,19 @@
+name: "Amine Boulabiar"
+skills:
+  c++: 65
+  python: 40
+  linux: 90
+
+experience:
+  TechLabs:
+    start: 2012
+    end: 2014
+    keywords:
+      - c++
+      - linux
+
+  DeepSoft:
+    start: 2019
+    end: 2021
+    keywords:
+      - python

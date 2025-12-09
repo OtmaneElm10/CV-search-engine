@@ -1,0 +1,26 @@
+name: Romain Petit
+skills:
+  c++: 90
+  embedded: 60
+
+experience:
+  MicroTech:
+    start: 2019
+    end: 2020
+    keywords:
+      - c++
+      - low-level
+
+  StartX:
+    start: 2020
+    end: 2021
+    keywords:
+      - c++
+      - systems
+
+  FastSolutions:
+    start: 2021
+    end: 2022
+    keywords:
+      - c++
+      - embedded

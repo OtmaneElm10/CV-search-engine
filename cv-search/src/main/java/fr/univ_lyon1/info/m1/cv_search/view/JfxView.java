@@ -39,6 +39,7 @@ public class JfxView implements Observer {
     private CheckBox colorExperienceCheckbox;
     private CheckBox detailExperienceCheckbox;
     private CheckBox rareSkillsCheckbox;
+    private CheckBox redFlagsCheckbox;
 
 
     private Map<DisplayOption, CheckBox> optionCheckboxes = new HashMap<>();
@@ -257,18 +258,24 @@ public class JfxView implements Observer {
         colorExperienceCheckbox = new CheckBox("Couleur selon expérience");
         detailExperienceCheckbox = new CheckBox("Afficher détails expériences");
         rareSkillsCheckbox = new CheckBox("Afficher perles rares");
+        redFlagsCheckbox = new CheckBox("Afficher les red flags");
+
 
         // default
         colorExperienceCheckbox.setSelected(true);
         detailExperienceCheckbox.setSelected(true);
+        rareSkillsCheckbox.setSelected(true);
+        redFlagsCheckbox.setSelected(true);
 
         // update when changed
         colorExperienceCheckbox.setOnAction(e -> refreshResults());
         detailExperienceCheckbox.setOnAction(e -> refreshResults());
         rareSkillsCheckbox.setOnAction(e -> refreshResults());
+        redFlagsCheckbox.setOnAction(e -> refreshResults());
 
         box.getChildren().addAll(
-            label, colorExperienceCheckbox, detailExperienceCheckbox, rareSkillsCheckbox
+            label, colorExperienceCheckbox, detailExperienceCheckbox,
+            rareSkillsCheckbox, redFlagsCheckbox
         );
         
 
@@ -276,6 +283,7 @@ public class JfxView implements Observer {
         optionCheckboxes.put(DisplayOption.COLOR_EXPERIENCE, colorExperienceCheckbox);
         optionCheckboxes.put(DisplayOption.DETAIL_EXPERIENCE, detailExperienceCheckbox);
         optionCheckboxes.put(DisplayOption.RARE_SKILLS, rareSkillsCheckbox);
+        optionCheckboxes.put(DisplayOption.RED_FLAGS, redFlagsCheckbox);
 
         // association option/decorator
         // when an option is selected, add the corresponding decorator
@@ -284,6 +292,7 @@ public class JfxView implements Observer {
         optionDecorators.put(DisplayOption.COLOR_EXPERIENCE, ExperienceColorDecorator::new);
         optionDecorators.put(DisplayOption.DETAIL_EXPERIENCE, ExperienceDetailedDecorator::new);
         optionDecorators.put(DisplayOption.RARE_SKILLS, RareSkillsDecorator::new);
+        optionDecorators.put(DisplayOption.RED_FLAGS, RedFlagDecorator::new);
 
 
         return box;
