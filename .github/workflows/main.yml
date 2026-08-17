@@ -1,0 +1,28 @@
+name: Cv-search ci
+on:
+  push:
+    branches:
+    - main
+
+  pull_request:
+    branches:
+      - main 
+
+jobs:
+  
+  secret-scanning:
+      name: Gitleaks scan 
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+          with:
+            fetch-depth: 0 #fetch all commits, not only the last
+
+        - name: Scan for secrets
+          run : |
+            docker run --rm \
+            -v "$PWD:/repo" \
+            ghcr.io/gitleaks/gitleaks:latest \
+            detect --verbose --source /repo
+             
